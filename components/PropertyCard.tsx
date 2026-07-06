@@ -1,97 +1,258 @@
-"use client";
+import { Feather } from "@expo/vector-icons";
+import React from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useColors } from "@/hooks/useColors";
+import { useLang } from "@/context/LangContext";
+import type { Property } from "@/lib/supabase";
 
-type Property = {
-  id: string;
-  city: string;
-  address: string;
-  rooms: number;
-  weekday_price: number;
-  image_url?: string;
+type Props = {
+  property: Property;
+  onPress: () => void;
 };
 
-export default function PropertyCard({
-  property,
-}: {
-  property: Property;
-}) {
+export function PropertyCard({ property, onPress }: Props) {
+  const colors = useColors();
+  const { tr } = useLang();
+
+  const statusColor =
+    property.status === "available"
+      ? colors.available
+      : property.status === "salary_credit"
+        ? colors.warning
+        : colors.busy;
+
+  const statusLabel =
+    property.status === "available"
+      ? tr("available")
+      : property.status === "salary_credit"
+        ? tr("salary_credit")
+        : tr("busy");
+
+  const statusIcon =
+    property.status === "available" ? "check-circle" :
+    property.status === "salary_credit" ? "clock" : "x-circle";
+
+  const priceDisplay = () => {
+    if (property.price_type === "negotiable") return tr("negotiable");
+    if (!property.price_weekday) return "—";
+    return `${property.price_weekday.toLocaleString()}₽`;
+  };
+
   return (
-    <div
-      onClick={() => (window.location.href = `/property/${property.id}`)}
-      style={{
-        cursor: "pointer",
-        borderRadius: 16,
-        overflow: "hidden",
-        border: "1px solid #e5e5e5",
-        background: "#fff",
-        transition: "0.2s",
-      }}
+    <TouchableOpacity
+      style={[styles.card, { backgroundColor: colors.card, shadowColor: colors.foreground }]}
+      onPress={onPress}
+      activeOpacity={0.9}
     >
-      <div style={{ position: "relative" }}>
-        {property.image_url ? (
-          <img
-            src={property.image_url}
-            alt={property.city}
-            style={{
-              width: "100%",
-              height: 220,
-              objectFit: "cover",
-            }}
+      {/* Image */}
+      <View style={styles.imageContainer}>
+        {property.images && property.images.length > 0 ? (
+          <Image
+            source={{ uri: property.images[0] }}
+            style={styles.image}
+            resizeMode="cover"
           />
         ) : (
-          <div
-            style={{
-              width: "100%",
-              height: 220,
-              background: "#eee",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            Şəkil yoxdur
-          </div>
+          <View style={[styles.imagePlaceholder, { backgroundColor: colors.muted }]}>
+            <Feather name="home" size={36} color={colors.mutedForeground} />
+            <Text style={[styles.noImgText, { color: colors.mutedForeground }]}>{tr("noImage")}</Text>
+          </View>
         )}
 
-        <button
-          style={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            border: "none",
-            background: "white",
-            borderRadius: "50%",
-            width: 38,
-            height: 38,
-            fontSize: 20,
-            cursor: "pointer",
-          }}
-        >
-          🤍
-        </button>
-      </div>
+        {/* Gradient overlay bottom */}
+        <View style={styles.imgOverlay} />
 
-      <div style={{ padding: 14 }}>
-        <h3 style={{ marginBottom: 5 }}>{property.city}</h3>
+        {/* Status badge */}
+        <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
+          <Feather name={statusIcon as any} size={11} color="#fff" />
+          <Text style={styles.statusText}>{statusLabel}</Text>
+        </View>
 
-        <p
-          style={{
-            color: "#666",
-            marginBottom: 10,
-          }}
-        >
-          {property.address}
-        </p>
+        {/* Image count */}
+        {property.images && property.images.length > 1 && (
+          <View style={[styles.imgCount, { backgroundColor: "rgba(0,0,0,0.55)" }]}>
+            <Feather name="image" size={11} color="#fff" />
+            <Text style={styles.imgCountText}>{property.images.length}</Text>
+          </View>
+        )}
+      </View>
 
-        <p>🏠 {property.rooms} otaq</p>
+      {/* Info */}
+      <View style={styles.info}>
+        {/* Title row */}
+        <View style={styles.titleRow}>
+          <Text style={[styles.rooms, { color: colors.foreground }]}>
+            {property.rooms}{tr("roomApartment")}
+          </Text>
+          <View style={styles.priceRow}>
+            <Text style={[styles.price, { color: property.price_type === "negotiable" ? colors.warning : colors.primary }]}>
+              {priceDisplay()}
+            </Text>
+            {property.price_type !== "negotiable" && (
+              <Text style={[styles.perDay, { color: colors.mutedForeground }]}>{tr("perDaySuffix")}</Text>
+            )}
+          </View>
+        </View>
 
-        <h2
-          style={{
-            marginTop: 10,
-          }}
-        >
-          {property.weekday_price} ₽
-        </h2>
-      </div>
-    </div>
+        {/* Address */}
+        <View style={styles.addressRow}>
+          <Feather name="map-pin" size={12} color={colors.mutedForeground} />
+          <Text style={[styles.district, { color: colors.mutedForeground }]} numberOfLines={1}>
+            {[property.district, property.address].filter(Boolean).join(", ")}
+          </Text>
+        </View>
+
+        {/* Tags */}
+        <View style={styles.tags}>
+          <View style={[styles.tag, { backgroundColor: colors.muted }]}>
+            <Feather name="users" size={11} color={colors.mutedForeground} />
+            <Text style={[styles.tagText, { color: colors.mutedForeground }]}>
+              {property.max_people} {tr("people")}
+            </Text>
+          </View>
+          {property.price_type === "weekday_weekend" && property.price_weekend && (
+            <View style={[styles.tag, { backgroundColor: colors.secondary }]}>
+              <Feather name="calendar" size={11} color={colors.secondaryForeground} />
+              <Text style={[styles.tagText, { color: colors.secondaryForeground }]}>
+                {tr("weekendShort")} {property.price_weekend.toLocaleString()}₽
+              </Text>
+            </View>
+          )}
+          {property.salary_credit && (
+            <View style={[styles.tag, { backgroundColor: "#fef3c7" }]}>
+              <Feather name="clock" size={11} color="#92400e" />
+              <Text style={[styles.tagText, { color: "#92400e" }]}>{tr("salaryTag")}</Text>
+            </View>
+          )}
+          {property.advance_credit && (
+            <View style={[styles.tag, { backgroundColor: "#dbeafe" }]}>
+              <Feather name="credit-card" size={11} color="#1e40af" />
+              <Text style={[styles.tagText, { color: "#1e40af" }]}>{tr("advanceTag")}</Text>
+            </View>
+          )}
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    borderRadius: 18,
+    marginBottom: 14,
+    overflow: "hidden",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.07,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  imageContainer: {
+    position: "relative",
+  },
+  image: {
+    width: "100%",
+    height: 190,
+  },
+  imagePlaceholder: {
+    width: "100%",
+    height: 190,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  noImgText: { fontSize: 13 },
+  imgOverlay: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 60,
+    backgroundColor: "transparent",
+  },
+  statusBadge: {
+    position: "absolute",
+    top: 12,
+    left: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+  },
+  statusText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  imgCount: {
+    position: "absolute",
+    top: 12,
+    right: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  imgCountText: { color: "#fff", fontSize: 11, fontWeight: "600" },
+  info: {
+    padding: 14,
+    gap: 8,
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  rooms: {
+    fontSize: 15,
+    fontWeight: "700",
+    flex: 1,
+  },
+  addressRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  district: {
+    fontSize: 13,
+    flex: 1,
+  },
+  priceRow: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: 1,
+  },
+  price: {
+    fontSize: 19,
+    fontWeight: "800",
+  },
+  perDay: {
+    fontSize: 12,
+  },
+  tags: {
+    flexDirection: "row",
+    gap: 6,
+    flexWrap: "wrap",
+  },
+  tag: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  tagText: {
+    fontSize: 11,
+    fontWeight: "600",
+  },
+});
