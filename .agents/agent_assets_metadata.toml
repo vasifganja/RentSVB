@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "KCG8rbwTqRbXzIG-r1cJh"
+uri = "file://artifacts/rentsvb/assets/images/icon.png"
+type = "image"
+title = "generated_image"

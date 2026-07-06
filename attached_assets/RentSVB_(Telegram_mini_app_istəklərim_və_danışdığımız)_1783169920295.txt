@@ -1,0 +1,2950 @@
+RentSVB
+
+Sənin verdiyin Suallar:
+
+
+
+1.
+
+
+
+Ev elanını kim yerləşdirə bilər?
+
+
+
+Hamı?
+Yalnız təsdiqlənmiş istifadəçilər?
+Yalnız ev sahibləri?
+
+
+2.
+
+
+
+Bir ev elanında hansı məlumatlar mütləq olmalıdır?
+
+
+
+Məsələn:
+
+
+
+otaq sayı
+qiymət
+ünvan
+şəkillər
+telefon
+
+
+Başqa nə lazımdır?
+
+
+
+3.
+
+
+
+Ev bir günlükdür, yoxsa:
+
+
+
+günlük
+həftəlik
+aylıq
+
+
+hamısı olacaq?
+
+
+
+4.
+
+
+
+İstifadəçi evi necə tapsın?
+
+
+
+Filtrlər:
+
+
+
+qiymət
+otaq sayı
+rayon
+tarix
+
+
+Başqa hansı filtrlər vacibdir?
+
+
+
+5.
+
+
+
+Sənin fikrincə qrupdakı ev elanlarının ən böyük problemi nədir?
+
+
+
+Məsələn:
+
+
+
+saxta elanlar?
+köhnə elanlar?
+qiymətin yazılmaması?
+şəkillərin olmaması?
+evin artıq tutulmuş olması?
+
+
+Mənim verdiyim Cavablar:
+
+
+
+1.
+
+
+
+Ev elanını kim yerləşdirə bilər?
+
+
+
+* Yalnız təsdiqlənmiş ev sahibləri
+
+(ilk girişdə qeydiyyatda bu soruşulsa və ev sahibi kimi sorğusu onaya getsə, admin təsdiqləsə olar?)
+
+
+
+2.
+
+
+
+Bir ev elanında hansı məlumatlar mütləq olmalıdır?
+
+
+
+Məsələn:
+
+
+
+* otaq sayı
+
+* qiymət (Zavod sistemi olduğu üçün burada ayda bir dəfə maaş bir dəfə isə avans alır insanlar. Və bəzi ev sahibləri bəzi insanlara maaşa yaxud avansa qədər nisyə verir mənzilləri) 
+
+* ünvan
+
+* şəkillər
+
+* telefon
+
+
+
+Başqa nə lazımdır?
+
+
+
+3.
+
+
+
+Ev bir günlükdür, yoxsa:
+
+
+
+* qrupda əsasən günlük evlər paylaşılır (98%)
+
+
+
+4.
+
+
+
+İstifadəçi evi necə tapsın?
+
+
+
+Filtrlər:
+
+
+
+* qiymət
+
+* otaq sayı
+
+* tarix
+
+
+
+5.
+
+
+
+Sənin fikrincə qrupdakı ev elanlarının ən böyük problemi nədir?
+
+
+
+Məsələn:
+
+
+
+*Ev sahibinin evi verənə qədər elanı təkrar təkrar paylaşması
+
+* köhnə elanlar ( ev sahibi evi verənə qədər müəyyən vaxt aralığında paylaşır amma evi verdikdən sonra elanı pozmağı unudur)
+
+* qiymətin yazılmaması
+
+* şəkillərin olmaması
+
+* evin artıq tutulmuş olması
+
+
+
+➖➖➖➖➖➖➖➖➖➖➖➖
+
+Çox yaxşı cavablar verdin. Açığı, mən artıq görürəm ki, sən adi elan botu yox, real problem həll edən məhsul qurmaq istəyirsən.
+
+
+
+Sənin cavablarına əsasən ilk dəfə olaraq məhsulun əsas skeletini çəkə bilərik.
+
+
+
+Birinci vacib qərar
+
+
+
+Mən ev elanlarını hamıya açmazdım.
+
+
+
+Sənin dediyin model daha düzgündür:
+
+
+
+Qeydiyyat
+
+
+
+İstifadəçi daxil olur.
+
+
+
+Seçir:
+
+
+
+Ev axtarıram
+Ev sahibiyəm
+
+
+⸻
+
+
+
+Əgər “Ev sahibiyəm” seçirsə:
+
+
+
+Form açılır:
+
+
+
+Ad
+Telefon
+Telegram
+Ev şəkli (istəyə bağlı)
+Qısa məlumat
+
+
+Sorğu admin panelə düşür.
+
+
+
+Admin:
+
+
+
+✅ Təsdiqlə
+
+
+
+❌ Rədd et
+
+
+
+⸻
+
+
+
+Beləliklə saxta elanların 80%-i yox olur.
+
+
+
+⸻
+
+
+
+Mənim əlavə edəcəyim məlumatlar
+
+
+
+Sənin yazdıqlarından başqa bunlar da mütləq lazımdır:
+
+
+
+Ev statusu
+
+
+
+🟢 Boşdur
+
+
+
+🔴 Dolu
+
+
+
+⸻
+
+
+
+Çünki sənin əsas problemin budur.
+
+
+
+İnsanlar tutulmuş evlərə zəng edir.
+
+
+
+⸻
+
+
+
+Borca verilir?
+
+
+
+Bu çox maraqlı xüsusiyyətdir.
+
+
+
+Mən bunu ayrıca filtr edərdim.
+
+
+
+⸻
+
+
+
+Ev sahibi seçir:
+
+
+
+✅ Maaşa qədər olar
+
+
+
+✅ Avansa qədər olar
+
+
+
+❌ Yalnız nağd
+
+
+
+⸻
+
+
+
+Bu funksiyanı başqa şəhərlərdə tapa bilməzsən.
+
+
+
+Bu sizin bazarın spesifik xüsusiyyətidir.
+
+
+
+⸻
+
+
+
+Maksimum adam sayı
+
+
+
+Məsələn:
+
+
+
+1 nəfər
+
+
+
+2 nəfər
+
+
+
+3 nəfər
+
+
+
+4+ nəfər
+
+
+
+⸻
+
+
+
+Çünki bəzi evlərə 4 nəfər yerləşir.
+
+
+
+Bəzi evlərə yalnız 1 nəfər.
+
+
+
+⸻
+
+
+
+Yataq sayı
+
+
+
+Bu da vacibdir.
+
+
+
+⸻
+
+
+
+Ən vacib funksiya
+
+
+
+Məncə bütün layihənin ürəyi budur:
+
+
+
+Elan müddəti
+
+
+
+Ev sahibi elan yaradır.
+
+
+
+Soruşulur:
+
+
+
+Bu elan nə qədər aktiv qalsın?
+
+
+
+6 saat
+12 saat
+24 saat
+Ev verilənə qədər
+
+
+⸻
+
+
+
+Məsələn:
+
+
+
+24 saat seçdi.
+
+
+
+24 saat sonra elan avtomatik silinir.
+
+
+
+⸻
+
+
+
+Bu qrupdakı “köhnə elan” problemini öldürür.
+
+
+
+⸻
+
+
+
+Mən olsaydım daha yaxşı edərdim
+
+
+
+Ev sahibi evi verəndə:
+
+
+
+🔴 Ev verildi
+
+
+
+düyməsinə basır.
+
+
+
+Elan avtomatik arxivə gedir.
+
+
+
+⸻
+
+
+
+Axtaran istifadəçi üçün
+
+
+
+Ana səhifə:
+
+
+
+🏠 Ev axtar
+
+
+
+⸻
+
+
+
+Filtrlər:
+
+
+
+💰 Qiymət
+
+
+
+🛏 Otaq sayı
+
+
+
+📅 Bu gün boşdur
+
+
+
+📅 Sabah boşdur
+
+
+
+📍 Rayon
+
+
+
+💳 Maaşa qədər verilir
+
+
+
+💳 Avansa qədər verilir
+
+
+
+👥 Adam sayı
+
+
+
+⸻
+
+
+
+Mənim ən sevdiyim funksiya
+
+
+
+Telegram qrupuna inteqrasiya
+
+
+
+Ev sahibi Mini App-da elan yaradır.
+
+
+
+Bot avtomatik qrupa göndərir:
+
+
+
+🏠 2 otaq
+
+
+
+📍 Mərkəz
+
+
+
+💰 3000 RUB
+
+
+
+💳 Maaşa qədər mümkündür
+
+
+
+📞 Əlaqə
+
+
+
+🔗 Mini App-da bax
+
+
+
+⸻
+
+
+
+Beləliklə:
+
+
+
+Qrup qalır.
+
+
+
+Amma elanların hamısı sənin sistemdən keçir.
+
+
+
+Bu çox vacibdir.
+
+
+
+İnsanları qrupdan çıxarmağa çalışma.
+
+
+
+Qrupu məhsula trafik gətirən kanal kimi istifadə et.
+
+
+
+
+
+İndi texniki tərəfdən
+
+
+
+Sənin üçün növbəti addım artıq “Ev Elanları v1.0 Texniki Layihəsi”dir.
+
+
+
+Amma bundan əvvəl mənə 5 vacib suala da cavab verməlisən:
+
+
+
+1
+
+
+
+Bu qrupda təxminən neçə nəfər var?
+
+
+
+100?
+
+
+
+500?
+
+
+
+1000?
+
+
+
+5000?
+
+
+
+10000+?
+
+
+
+⸻
+
+
+
+2
+
+
+
+Gündə orta hesabla neçə ev elanı paylaşılır?
+
+
+
+⸻
+
+
+
+3
+
+
+
+Ev sahiblərinin təxminən sayı neçədir?
+
+
+
+20?
+
+
+
+50?
+
+
+
+100?
+
+
+
+200?
+
+
+
+⸻
+
+
+
+4
+
+
+
+Ev sahibləri eyni adamlardır, yoxsa tez-tez dəyişirlər?
+
+
+
+Bu sual çox vacibdir.
+
+
+
+⸻
+
+
+
+5
+
+
+
+Sən bu layihədə öz rolunu necə görürsən?
+
+
+
+Admin
+Layihə sahibi
+Ev sahiblərini təsdiqləyən şəxs
+Reklam satan şəxs
+
+
+
+yoxsa hamısı?
+
+
+
+İndi texniki tərəfdən
+
+
+
+Sənin üçün növbəti addım artıq “Ev Elanları v1.0 Texniki Layihəsi”dir.
+
+
+
+Amma bundan əvvəl mənə 5 vacib suala da cavab verməlisən:
+
+
+
+1
+
+
+
+Bu qrupda təxminən neçə nəfər var?
+
+
+
+100?
+
+
+
+500?
+
+
+
+1000?
+
+
+
+5000?
+
+
+
+10000+?
+
+
+
+⸻
+
+
+
+2
+
+
+
+Gündə orta hesabla neçə ev elanı paylaşılır?
+
+
+
+⸻
+
+
+
+3
+
+
+
+Ev sahiblərinin təxminən sayı neçədir?
+
+
+
+20?
+
+
+
+50?
+
+
+
+100?
+
+
+
+200?
+
+
+
+⸻
+
+
+
+4
+
+
+
+Ev sahibləri eyni adamlardır, yoxsa tez-tez dəyişirlər?
+
+
+
+Bu sual çox vacibdir.
+
+
+
+⸻
+
+
+
+5
+
+
+
+Sən bu layihədə öz rolunu necə görürsən?
+
+
+
+Admin
+Layihə sahibi
+Ev sahiblərini təsdiqləyən şəxs
+Reklam satan şəxs
+
+
+yoxsa hamısı?
+
+
+
+Bu cavablardan sonra mən sənə artıq:
+
+
+
+ database strukturu,
+ admin panel strukturu,
+ Telegram Mini App ekranları,
+ ilk versiya üçün dəqiq büdcə,
+ AI ilə kodun necə yazdırılacağı,
+
+
+
+barədə konkret plan verə bilərəm. Bu mərhələdə artıq layihə ideyadan çıxıb məhsul səviyyəsinə keçəcək.
+
+
+
+🧠 RentSVB sisteminin “əsas planı”
+
+
+
+👑 1. Rollar (core sistem)
+
+
+
+* Admin (sən)
+
+* Ev sahibi
+
+* İstifadəçi
+
+
+
+⸻
+
+
+
+🏠 2. Ev sistemi
+
+
+
+* Ev sahibi:
+
+  * ev əlavə edir
+
+  * qiymət dəyişir
+
+  * status dəyişir (Свободно / Занято / До зарплаты)
+
+* Ev bir neçə dəfə kirayə verilə bilər
+
+* Status tez dəyişir
+
+
+
+⸻
+
+
+
+📊 3. Status sistemi (ən vacib hissə)
+
+
+
+* Свободно 🟢
+
+* Занято 🔴
+
+* До зарплаты 🟡
+
+
+
+👉 Bu status real-time dəyişməlidir
+
+
+
+⸻
+
+
+
+📞 4. Kontakt sistemi
+
+
+
+* Phone call
+
+* Telegram
+
+* Direkt owner ilə əlaqə
+
+
+
+⸻
+
+
+
+⭐ 5. İstifadəçi funksiyaları
+
+
+
+* ev axtarır
+
+* zəng edir
+
+* Telegram yazır
+
+* favoritə atır
+
+
+
+⸻
+
+
+
+📦 6. Admin panel
+
+
+
+* evləri idarə edir
+
+* userləri bloklayır
+
+* statistika görür
+
+
+
+⸻
+
+
+
+⚡ 7. Ən vacib ideya (sənin dediyin “fərq”)
+
+
+
+* Bu Airbnb deyil
+
+* Bu RentSVB real-time kirayə sistemidir
+
+* Eyni ev gün ərzində bir neçə dəfə işlənir
+
+* Status dəyişimi əsas mexanikadır
+
+
+
+⸻
+
+
+
+🔥 8. Texniki məqsəd
+
+
+
+* 5 saniyəyə işləyən ev sahibi paneli
+
+* minimal UI
+
+* Telegram əsas əlaqə kanalı
+
+
+
+⸻
+
+
+
+💥 VACİB HƏQİQƏT (sənin bugünkü problemə görə)
+
+
+
+Sənin hazır etdiyin sistem ideyaya uyğundur, sadəcə:
+
+
+
+* routing düzəlməyib idi
+
+* Next.js params problemi var idi
+
+* API safe edilməmişdi
+
+
+
+👉 Yəni problem “layihə” yox idi
+
+👉 problem “implementation” idi
+
+
+
+⸻
+
+
+
+İNDİ SƏNƏ DÜZ YOL
+
+
+
+Əgər davam edirik:
+
+
+
+1 addım (mütləq)
+
+
+
+→ /property/[id] + API stabil
+
+
+
+2 addım
+
+
+
+→ UI redesign (card system)
+
+
+
+3 addım
+
+
+
+→ Admin panel logic
+
+
+
+4 addım
+
+
+
+
+→ Telegram integration (sənin ideyanın əsas hissəsi)
+
+
+
+
+
+1
+
+
+
+Bu qrupda təxminən neçə nəfər var?
+
+
+
+Söhbət vhatsap qrupundan gedir. biz adamları hazır olduğumuzda telegram qrupuna və telegram mobil tətbiqə köçürəcik. və daha çox adam yığacam.( 2-3 başqa qruplarda var. mən dediyim qrupda hal hazırda 670 adam var
+
+
+
+2
+
+
+
+Gündə orta hesabla neçə ev elanı paylaşılır?
+
+
+
+minumum 4-5 həftə içi. həftə sonlarına doğru 8-10
+
+
+
+3
+
+
+
+Ev sahiblərinin təxminən sayı neçədir?
+
+
+
+8-10. onlar sırf bu işlə məşğul olanlardır əksəriyyəti
+
+
+
+4
+
+
+
+Ev sahibləri eyni adamlardır, yoxsa tez-tez dəyişirlər?
+
+
+
+əksəriyyəti eynidir
+
+
+
+5
+
+
+
+Sən bu layihədə öz rolunu necə görürsən?
+
+
+
+* Admin
+
+* Layihə sahibi
+
+* Ev sahiblərini təsdiqləyən şəxs
+
+* Reklam satan şəxs
+
+* Ən əsası bu işdə ilk və ən yaxşı uğuru qazanan birisi)
+
+
+
+Bu layihədə əsas məqsədin nədir?
+
+
+
+1. Sadəcə qrupun işini rahatlaşdırmaq?
+
+2. Ayda 30-50 min rubl əlavə gəlir qazanmaq?
+
+3. Bunu sonradan Svobodnıdakı bütün millətlərə yaymaq?
+
+4. Rusiyanın digər zavod şəhərlərinə çıxarmaq?
+
+
+
+CAVAB HAMISINI ÖZÜNDƏ CƏMLƏYƏN 4. Hər yerdə olmaq
+
+
+
+Razılaşdığım, olmasını istədiyim təkliflərin:
+
+
+
+İndi mən artıq sənin layihəni daha dəqiq görürəm.
+
+
+
+Əslində sən “ev elanları tətbiqi” yaratmırsan.
+
+
+
+Sən bir şəhərdə formalaşmış, sonra digər şəhərlərə köçürülə bilən işçi icması (worker ecosystem) qurursan.
+
+
+
+Və maraqlısı odur ki, səndə bunun üçün ən vacib resurs artıq var:
+
+
+
+Auditoriya var (670 nəfər)
+Aktiv qrup var
+8-10 əsas ev sahibi var
+Real problem var
+4 illik müşahidə var
+
+
+Əksər startaplarda bunların heç biri olmur.
+
+
+
+⸻
+
+
+
+Mənim sənin üçün strateji xəritəm
+
+
+
+Faza 1 — Ev Sahiblərini Özünə Bağla
+
+
+
+Bu ən vacib mərhələdir.
+
+
+
+Çünki istifadəçilər yox, ev sahibləri sənin kontent istehsalçılarındır.
+
+
+
+Bu gün WhatsApp qrupunda:
+
+
+
+8-10 ev sahibi
+gündəlik 5-10 elan
+
+
+var.
+
+
+
+Əgər bu 8-10 adam sənin sistemdən istifadə etməyə başlasa, istifadəçilər avtomatik gələcək.
+
+
+
+⸻
+
+
+
+Ona görə ilk tətbiq
+
+
+
+“Ev Axtaranlar üçün tətbiq”
+
+
+
+yox,
+
+
+
+“Ev Sahibləri üçün panel”
+
+
+
+olmalıdır.
+
+
+
+Bu çox vacib fərqdir.
+
+
+
+⸻
+
+
+
+Ev sahibi daxil olur.
+
+
+
+Görür:
+
+
+
+➕ Elan əlavə et
+
+
+
+📋 Aktiv elanlar
+
+
+
+📦 Verilmiş evlər
+
+
+
+📊 Baxış statistikası
+
+
+
+⸻
+
+
+
+O hiss etməlidir ki:
+
+
+
+“WhatsApp-da elan paylaşmaqdan daha rahatdır.”
+
+
+
+⸻
+
+
+
+Faza 2 — WhatsApp-dan Telegram-a Körpü
+
+
+
+Mən olsaydım WhatsApp qrupunu bağlamazdım.
+
+
+
+Əksinə istifadə edərdim.
+
+
+
+⸻
+
+
+
+Ev sahibi tətbiqdə elan yaradır.
+
+
+
+Sistem avtomatik Telegram kanalına paylaşır.
+
+
+
+⸻
+
+
+
+Telegram kanalında:
+
+
+
+🏠 2 otaq
+
+
+
+💰 3000 RUB
+
+
+
+📍 Mərkəz
+
+
+
+🔗 Ətraflı bax
+
+
+
+⸻
+
+
+
+İnsan klikləyir.
+
+
+
+Mini App açılır.
+
+
+
+⸻
+
+
+
+Beləliklə:
+
+
+
+WhatsApp → Telegram → Mini App
+
+
+
+zənciri yaranır.
+
+
+
+⸻
+
+
+
+Faza 3 — Etibar Sistemi
+
+
+
+Sənin bazarda ən böyük kapitalın gələcəkdə bu olacaq.
+
+
+
+⸻
+
+
+
+Məsələn:
+
+
+
+Ev sahibi:
+
+
+
+Rəşad
+
+
+
+213 elan
+4.9 reytinq
+2 il aktiv
+
+
+⸻
+
+
+
+Yeni ev sahibi:
+
+
+
+0 elan
+reytinq yoxdur
+
+
+⸻
+
+
+
+İnsan avtomatik etibarlı adama yönələcək.
+
+
+
+⸻
+
+
+
+Faza 4 — İlk Pul
+
+
+
+Mən ilk 6 ay heç bir komissiya götürməzdim.
+
+
+
+Heç bir.
+
+
+
+⸻
+
+
+
+Sadəcə:
+
+
+
+VIP Ev Sahibi
+
+
+
+⸻
+
+
+
+Ayda:
+
+
+
+500-1000 rubl
+
+
+
+⸻
+
+
+
+Əvəzində:
+
+
+
+⭐ Elanlar yuxarıda
+
+
+
+⭐ Profil nişanı
+
+
+
+⭐ Daha çox şəkil
+
+
+
+⭐ Statistika
+
+
+
+⸻
+
+
+
+8 ev sahibindən 5 nəfər alsa:
+
+
+
+5000 rubl
+
+
+
+⸻
+
+
+
+Sonra:
+
+
+
+20 ev sahibi
+
+
+
+1000 rubl
+
+
+
+=
+
+
+
+20.000 rubl
+
+
+
+⸻
+
+
+
+Sonra başqa şəhərlər.
+
+
+
+⸻
+
+
+
+Sənin əsas səhvin nə ola bilər?
+
+
+
+Mən bunu indidən deyim.
+
+
+
+Sən çox ideya əlavə etmək istəyəcəksən.
+
+
+
+⸻
+
+
+
+Valyuta.
+
+
+
+Taksi.
+
+
+
+İş elanları.
+
+
+
+Alqı-satqı.
+
+
+
+Market.
+
+
+
+Xidmətlər.
+
+
+
+⸻
+
+
+
+Etmə.
+
+
+
+⸻
+
+
+
+Ən azı ilk 3 ay.
+
+
+
+⸻
+
+
+
+Yalnız:
+
+
+
+🏠 Ev Elanları
+
+
+
+⸻
+
+
+
+Çünki sənin bazarda hazırda ən güclü siqnal məhz budur.
+
+
+
+⸻
+
+
+
+Texniki tərəfdən
+
+
+
+Əgər bu gün başlasaq, mən belə qurardım:
+
+
+
+Telegram Mini App
+
+
+
+Frontend:
+
+
+
+Next.js
+
+
+Backend:
+
+
+
+Supabase
+
+
+Admin:
+
+
+
+Web panel
+
+
+Storage:
+
+
+
+Supabase Storage
+
+
+⸻
+
+
+
+Başlanğıc xərci:
+
+
+
+0 - 5000 rubl
+
+
+
+əgər AI ilə özün yığsan.
+
+
+
+⸻
+
+
+
+Mənim səndə gördüyüm ən böyük üstünlük
+
+
+
+Sən proqramçı deyilsən.
+
+
+
+Bu dəfə bunu üstünlük kimi deyirəm.
+
+
+
+Çünki proqramçılar adətən:
+
+
+
+“Necə yazaq?”
+
+
+
+deyə düşünürlər.
+
+
+
+Sən isə:
+
+
+
+“İnsanların problemi nədir?”
+
+
+
+deyə düşünürsən.
+
+
+
+Bu isə uğurlu məhsul qurucularının düşüncə tərzidir.
+
+
+
+⸻
+
+
+
+Növbəti addım kimi mən artıq səninlə Ev Elanları Mini App v1.0 spesifikasiyasını hazırlamağa başlamağı məsləhət görürəm.
+
+
+
+Yəni ekran-ekran:
+
+
+
+Giriş ekranı
+Qeydiyyat ekranı
+Ev sahibi təsdiqi
+Elan əlavə etmə
+Elan siyahısı
+Elan kartı
+Admin paneli
+Telegram inteqrasiyası
+Verilənlər bazası cədvəlləri
+
+
+
+və bunu elə səviyyədə yazarıq ki, sonra həmin sənədi Claude və ya Lovable-a verəndə ilk işləyən versiyanı yaratmağa başlaya biləsən. Bu artıq ideya mərhələsi deyil, məhsulun texniki layihələndirilməsi mərhələsidir.
+
+
+
+Ev sahibi hansı üsulla şəkil əlavə etməlidir?
+
+
+
+Variant A:
+
+
+
+Şəkilləri telefonundan yükləyir.
+
+
+
+⸻
+
+
+
+Variant B:
+
+
+
+Şəkilləri Telegram-a göndərir.
+
+
+
+Bot avtomatik götürür.
+
+
+
+⸻
+
+
+
+Variant C:
+
+
+
+Hər ikisi.
+
+
+
+⸻C variantı bəli
+
+
+
+Mən şəxsən C variantına meylliyəm.
+
+
+
+Çünki bəzi ev sahibləri texnologiya ilə yaxşı deyil.
+
+
+
+⸻
+
+
+
+İkinci sual
+
+
+
+Bir ev sahibi eyni anda neçə aktiv elan saxlaya bilər?
+
+
+
+Məsələn:
+
+
+
+* 5 elan
+
+
+
+Üçüncü sual
+
+
+
+Ev sahibi üçün hansı məlumat mütləq olsun?
+
+
+
+Məsələn:
+
+
+
+* Ad
+
+* Telefon
+
+
+* Telegram username
+
+
+
+
+
+Səninlə razı olduğum təkliflərdən:
+
+
+
+😄 Yaxşı, Vasif. Onda başlayaq.
+
+
+
+Bu gün artıq sənin layihənin ilk rəsmi sənədini hazırlayırıq.
+
+
+
+Ev Elanları Mini App v1.0
+
+
+
+Screen Map (Ekran Xəritəsi)
+
+
+
+Bu xəritə gələcəkdə:
+
+
+
+Claude
+ChatGPT
+Replit
+Lovable
+
+
+üçün əsas sənəd olacaq.
+
+
+
+⸻
+
+
+
+EKRAN 1
+
+
+
+Splash Screen
+
+
+
+Açılan zaman:
+
+
+
+Logo
+
+
+
+və
+
+
+
+“Svobodny Housing”
+
+
+
+(yaxud sonradan seçəcəyimiz ad)
+
+
+
+⸻
+
+
+
+2 saniyə
+
+
+
+↓
+
+
+
+Ana səhifə
+
+
+
+⸻
+
+
+
+EKRAN 2
+
+
+
+Ana Səhifə
+
+
+
+Üstdə:
+
+
+
+🔍 Mənzil Axtar
+
+
+
+⸻
+
+
+
+Ortada:
+
+
+
+🟢 Boş mənzillər sayı
+
+
+
+Məsələn:
+
+
+
+23 aktiv mənzil
+
+
+
+⸻
+
+
+
+Filtrlər:
+
+
+
+💰 Qiymət
+
+
+
+🏠 Otaq sayı
+
+
+
+👥 Adam sayı
+
+
+
+💳 Maaşa qədər
+
+
+
+💳 Avansa qədər
+
+
+
+⸻
+
+
+
+Aşağıda:
+
+
+
+Mənzil kartları
+
+
+
+⸻
+
+
+
+Kart görünüşü:
+
+
+
+📸 Şəkil
+
+
+
+🏠 2 otaq
+
+
+
+📍 Mərkəz
+
+
+
+💰 3000 RUB
+
+
+
+👥 3 nəfər
+
+
+
+🟢 Boşdur
+
+
+
+⸻
+
+
+
+Kart kliklənir
+
+
+
+↓
+
+
+
+Mənzil Detalı
+
+
+
+⸻
+
+
+
+EKRAN 3
+
+
+
+Mənzil Detalı
+
+
+
+Slider
+
+
+
+(2-5 şəkil)
+
+
+
+⸻
+
+
+
+🏠 Otaq sayı
+
+
+
+📍 Ünvan
+
+
+
+💰 Həftə içi qiymət
+
+
+
+💰 Həftə sonu qiymət
+
+
+
+👥 Maksimum adam sayı
+
+
+
+💳 Maaşa qədər
+
+
+
+💳 Avansa qədər
+
+
+
+📝 Təsvir
+
+
+
+⸻
+
+
+
+Düymələr:
+
+
+
+📞 Zəng et
+
+
+
+💬 Telegram yaz
+
+
+
+⸻
+
+
+
+EKRAN 4
+
+
+
+Profil
+
+
+
+İstifadəçi üçün
+
+
+
+⸻
+
+
+
+Seçimlər:
+
+
+
+🏠 Ev Sahibiyəm
+
+
+
+📞 Əlaqə
+
+
+
+ℹ️ Haqqında
+
+
+
+⸻
+
+
+
+EKRAN 5
+
+
+
+Ev Sahibi Müraciəti
+
+
+
+Ad Soyad
+
+
+
+Telefon
+
+
+
+Telegram Username
+
+
+
+⸻
+
+
+
+Düymə:
+
+
+
+📨 Müraciət Göndər
+
+
+
+⸻
+
+
+
+Adminə bildiriş
+
+
+
+⸻
+
+
+
+EKRAN 6
+
+
+
+Admin Təsdiqi
+
+
+
+(Yalnız sən)
+
+
+
+⸻
+
+
+
+Yeni müraciətlər
+
+
+
+⸻
+
+
+
+Vasif görür:
+
+
+
+👤 Rəşad
+
+
+
+📞 nömrə
+
+
+
+📱 Telegram
+
+
+
+⸻
+
+
+
+Düymələr:
+
+
+
+✅ Təsdiqlə
+
+
+
+❌ Rədd et
+
+
+
+⸻
+
+
+
+EKRAN 7
+
+
+
+Ev Sahibi Paneli
+
+
+
+Girişdən sonra
+
+
+
+⸻
+
+
+
+➕ Yeni Mənzil
+
+
+
+📋 Aktiv Mənzillər
+
+
+
+📦 Arxiv
+
+
+
+⸻
+
+
+
+EKRAN 8
+
+
+
+Yeni Mənzil
+
+
+
+1-ci Addım
+
+
+
+🏠 Otaq sayı
+
+
+
+⸻
+
+
+
+2-ci Addım
+
+
+
+📍 Ünvan
+
+
+
+⸻
+
+
+
+3-cü Addım
+
+
+
+💰 Qiymət Növü
+
+
+
+◉ Sabit
+
+
+
+◉ Həftə içi / Həftə sonu
+
+
+
+⸻
+
+
+
+4-cü Addım
+
+
+
+👥 Adam sayı
+
+
+
+⸻
+
+
+
+5-ci Addım
+
+
+
+💳 Maaşa qədər?
+
+
+
+💳 Avansa qədər?
+
+
+
+⸻
+
+
+
+6-cı Addım
+
+
+
+📸 Şəkillər
+
+
+
+Minimum 2
+
+
+
+Maksimum 5
+
+
+
+⸻
+
+
+
+7-ci Addım
+
+
+
+📝 Təsvir
+
+
+
+⸻
+
+
+
+Düymə:
+
+
+
+🚀 Yerləşdir
+
+
+
+⸻
+
+
+
+EKRAN 9
+
+
+
+Mənzil İdarəetməsi
+
+
+
+Ev sahibi görür:
+
+
+
+⸻
+
+
+
+🏠 Mənzil #1
+
+
+
+🟢 Boşdur
+
+
+
+⸻
+
+
+
+Düymələr:
+
+
+
+✏️ Redaktə
+
+
+
+🔴 Dolu et
+
+
+
+🗑 Sil
+
+
+
+⸻
+
+
+
+və ya
+
+
+
+⸻
+
+
+
+🏠 Mənzil #1
+
+
+
+🔴 Dolu
+
+
+
+⸻
+
+
+
+Düymələr:
+
+
+
+🟢 Boş et
+
+
+
+✏️ Redaktə
+
+
+
+⸻
+
+
+
+EKRAN 10
+
+
+
+Telegram İnteqrasiyası
+
+
+
+Ev sahibi:
+
+
+
+🚀 Yerləşdir
+
+
+
+basır
+
+
+
+⸻
+
+
+
+Telegram kanalına avtomatik:
+
+
+
+🏠 2 otaqlı mənzil
+
+
+
+📍 Mərkəz
+
+
+
+💰 3000 RUB
+
+
+
+👥 3 nəfər
+
+
+
+💳 Maaşa qədər mümkündür
+
+
+
+🔗 Ətraflı bax
+
+
+
+
+
+Dizayn Prinsipi
+
+
+
+Sənin auditoriyan:
+
+
+
+Zavod işçiləri
+Tikinti işçiləri
+Sürücülər
+Müvəqqəti işçilər
+
+
+olduğu üçün mən belə prinsiplər qoyardım:
+
+
+
+✅ Böyük düymələr
+
+
+
+✅ Az mətn
+
+
+
+✅ Maksimum 3 klik
+
+
+
+✅ Telegram stilinə yaxın görünüş
+
+
+
+❌ Çox menyu
+
+
+
+❌ Qarışıq ekranlar
+
+
+
+❌ Uzun formalar
+
+
+
+ANA SƏHİFƏ
+
+
+
+
+
+━━━━━━━━━━━━━━
+
+🏠 Svobodny Evləri
+
+━━━━━━━━━━━━━━
+
+
+
+🔍 Mənzil axtar
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+🏠 Aktiv mənzillər: 23
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+💰 Qiymət
+
+
+
+🏠 Otaq sayı
+
+
+
+👥 Adam sayı
+
+
+
+💳 Maaşa qədər
+
+
+
+💳 Avansa qədər
+
+
+
+[ Filtrlə ]
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+📸 2 otaqlı mənzil
+
+
+
+📍 Mərkəz
+
+
+
+💰 3000 RUB
+
+
+
+🟢 Boşdur
+
+
+
+[ Ətraflı Bax ]
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+📸 1 otaqlı mənzil
+
+
+
+📍 Mikrorayon
+
+
+
+💰 2500 RUB
+
+
+
+🟢 Boşdur
+
+
+
+[ Ətraflı Bax ]
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+🏠 Evlər  👤 Profil
+
+
+
+
+
+MƏNZIL KARTI
+
+
+
+📸 Şəkil
+
+
+
+🏠 2 otaq
+
+
+
+📍 Mərkəz
+
+
+
+💰 Həftə içi: 3000
+
+
+
+💰 Həftə sonu: 4000
+
+
+
+👥 3 nəfər
+
+
+
+💳 Maaşa qədər
+
+
+
+🟢 Boşdur
+
+
+
+MƏNZIL DETALI
+
+
+
+━━━━━━━━━━━━━━
+
+📸 FOTO QALEREYA
+
+━━━━━━━━━━━━━━
+
+
+
+🏠 2 otaqlı
+
+
+
+📍 Mərkəz
+
+
+
+💰 Həftə içi: 3000
+
+
+
+💰 Həftə sonu: 4000
+
+
+
+👥 Maksimum: 3 nəfər
+
+
+
+💳 Maaşa qədər:
+
+Bəli
+
+
+
+💳 Avansa qədər:
+
+Xeyr
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+📝 Təsvir
+
+
+
+Təmiz mənzildir.
+
+Market yaxındadır.
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+📞 Zəng Et
+
+
+
+💬 Telegram Yaz
+
+
+
+
+
+PROFIL
+
+
+
+━━━━━━━━━━━━━━
+
+👤 Profil
+
+━━━━━━━━━━━━━━
+
+
+
+Ad:
+
+Vasif
+
+
+
+Telefon:
+
++7 ...
+
+
+
+Telegram:
+
+@vasif
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+🏠 Ev Sahibiyəm
+
+
+
+ℹ️ Haqqında
+
+
+
+📞 Əlaqə
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+EV SAHIBI PANELI
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+🏠 Mənzil #1
+
+
+
+🟢 Boşdur
+
+
+
+[ Redaktə ]
+
+
+
+[ Dolu Et ]
+
+
+
+━━━━━━━━━━━━━━
+
+
+
+🏠 Mənzil #2
+
+
+
+🔴 Dolu
+
+
+
+[ Redaktə ]
+
+
+
+[ Boş Et ]
+
+
+
+
+━━━━━━━━━━━━━━

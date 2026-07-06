@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/"
+title = "RentSVB - Svobodny Evləri"
+version = "1.0.0"
+id = "artifacts/rentsvb"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/" ]
+localPort = 22519
+
+[services.development]
+run = "pnpm --filter @workspace/rentsvb run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rentsvb", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/rentsvb", "run", "serve" ]
+
+[services.env]
+PORT = "22519"
+BASE_PATH = "/"

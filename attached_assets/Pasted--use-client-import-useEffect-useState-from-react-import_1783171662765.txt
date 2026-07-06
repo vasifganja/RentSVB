@@ -1,0 +1,150 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+
+export default function AdminPage() {
+  const [title, setTitle] = useState("");
+  const [city, setCity] = useState("Свободный");
+  const [address, setAddress] = useState("");
+  const [price, setPrice] = useState("");
+  const [rooms, setRooms] = useState("");
+  const [maxPeople, setMaxPeople] = useState("");
+  const [rentType, setRentType] = useState("daily");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const [list, setList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const CITIES = [
+    "Свободный",
+    "Благовещенск",
+    "Белогорск",
+    "Тында",
+    "Шимановск",
+  ];
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function load() {
+    const { data } = await supabase
+      .from("properties")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    setList(data || []);
+  }
+
+  async function uploadImage(file: File) {
+    const fileName = `${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from("property-images")
+      .upload(fileName, file);
+
+    if (error) {
+      console.log(error);
+      return null;
+    }
+
+    const { data } = supabase.storage
+      .from("property-images")
+      .getPublicUrl(fileName);
+
+    return data.publicUrl;
+  }
+
+  async function addProperty() {
+    setLoading(true);
+
+    let imageUrl = null;
+
+    if (imageFile) {
+      imageUrl = await uploadImage(imageFile);
+    }
+
+    const { error } = await supabase.from("properties").insert({
+      title,
+      city,
+      address,
+      price: Number(price),
+      rooms: Number(rooms),
+      max_people: Number(maxPeople),
+      rent_type: rentType,
+      image: imageUrl,
+      status: "free",
+    });
+
+    if (error) {
+      console.log(error);
+      setLoading(false);
+      return;
+    }
+
+    setTitle("");
+    setAddress("");
+    setPrice("");
+    setRooms("");
+    setMaxPeople("");
+    setImageFile(null);
+
+    load();
+    setLoading(false);
+  }
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h2>Admin Panel</h2>
+
+      <input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+      <br />
+
+      <select value={city} onChange={(e) => setCity(e.target.value)}>
+        {CITIES.map((c) => (
+          <option key={c}>{c}</option>
+        ))}
+      </select>
+
+      <br />
+
+      <input placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
+      <br />
+
+      <input placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
+      <br />
+
+      <input placeholder="Rooms" value={rooms} onChange={(e) => setRooms(e.target.value)} />
+      <br />
+
+      <input placeholder="Max People" value={maxPeople} onChange={(e) => setMaxPeople(e.target.value)} />
+      <br />
+
+      <select value={rentType} onChange={(e) => setRentType(e.target.value)}>
+        <option value="daily">daily</option>
+        <option value="monthly">monthly</option>
+      </select>
+
+      <br />
+
+      <input type="file" onChange={(e) => setImageFile(e.target.files?.[0] || null)} />
+
+      <br />
+
+      <button onClick={addProperty} disabled={loading}>
+        {loading ? "Adding..." : "Add Property"}
+      </button>
+
+      <hr />
+
+      <h3>Properties</h3>
+
+      {list.map((p) => (
+        <div key={p.id} style={{ marginBottom: 10 }}>
+          <b>{p.title}</b> — {p.city} — {p.price} RUB
+        </div>
+      ))}
+    </div>
+  );
+}
