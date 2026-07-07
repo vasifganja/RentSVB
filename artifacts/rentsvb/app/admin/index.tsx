@@ -2,6 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
+import { getAdminSession } from "../../lib/adminAuth";
 import {
   ActivityIndicator,
   Alert,
@@ -98,7 +99,9 @@ export default function AdminScreen() {
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
   // Guard: only admin
-  if (!profile || profile.role !== "admin") {
+  const adminSession = getAdminSession();
+
+if (!profile || (profile.role !== "admin" && !adminSession?.loggedIn)) {
     return (
       <View style={[styles.center, { backgroundColor: colors.background, flex: 1 }]}>
         <Feather name="lock" size={48} color={colors.border} />
