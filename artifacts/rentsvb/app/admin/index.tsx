@@ -101,14 +101,21 @@ export default function AdminScreen() {
   // Guard: only admin
   const adminSession = getAdminSession();
 
-if (!profile || (profile.role !== "admin" && !adminSession?.loggedIn)) {
-    return (
-      <View style={[styles.center, { backgroundColor: colors.background, flex: 1 }]}>
-        <Feather name="lock" size={48} color={colors.border} />
-        <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>Giriş yoxdur</Text>
-      </View>
-    );
-  }
+if (!profile && !adminSession?.loggedIn) {
+  router.replace("/admin/login");
+  return null;
+}
+
+if (profile && profile.role !== "admin" && !adminSession?.loggedIn) {
+  return (
+    <View style={[styles.center, { backgroundColor: colors.background, flex: 1 }]}>
+      <Feather name="lock" size={48} color={colors.border} />
+      <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
+        Giriş yoxdur
+      </Text>
+    </View>
+  );
+}
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
