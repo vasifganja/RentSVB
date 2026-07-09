@@ -82,9 +82,9 @@ type Stats = {
 
   activeUsers: number;
   todayOpens: number;
+  monthOpens: number;
   totalOpens: number;
 };
-
 const TABS: { key: Tab; icon: string; label: string }[] = [
   { key: "requests", icon: "inbox", label: "Müraciətlər" },
   { key: "stats", icon: "bar-chart-2", label: "Statistika" },
@@ -302,6 +302,14 @@ function StatsTab({ colors, insets }: { colors: any; insets: any }) {
       ]);
       const properties = props.data || [];
       const unpaid = (rentals.data || []).reduce((sum, r) => sum + r.commission_amount, 0);
+      const today = new Date().toISOString().slice(0, 10);
+
+
+const month = new Date().toISOString().slice(0, 7);
+
+const monthOpens = (appEventsUsers.data || []).filter(
+  (x) => x.created_at?.slice(0, 7) === month
+).length;
       const totalOpens = appEvents.count || 0;
 
 const uniqueUsers = new Set(
@@ -310,14 +318,13 @@ const uniqueUsers = new Set(
     .filter(Boolean)
 ).size;
 
-const today = new Date().toISOString().slice(0, 10);
 
 const todayOpens = (appEventsUsers.data || []).filter(x =>
   x.created_at?.startsWith(today)
 ).length;
-      setStats({
+   setStats({
   totalListings: properties.length,
-  availableListings: properties.filter(p => p.status === "available").length,
+  availableListings: properties.filter((p) => p.status === "available").length,
   totalOwners: (owners.data || []).length,
   totalUsers: (users.data || []).length,
   pendingRequests: (pending.data || []).length,
@@ -325,6 +332,7 @@ const todayOpens = (appEventsUsers.data || []).filter(x =>
 
   activeUsers: uniqueUsers,
   todayOpens: todayOpens,
+  monthOpens: monthOpens,
   totalOpens: totalOpens,
 });
       setLoading(false);
@@ -339,9 +347,13 @@ const todayOpens = (appEventsUsers.data || []).filter(x =>
     { icon: "check-circle", label: "Boş elanlar", value: stats!.availableListings, color: colors.available },
     { icon: "key", label: "Ev sahibləri", value: stats!.totalOwners, color: "#8b5cf6" },
     { icon: "users", label: "İstifadəçilər", value: stats!.totalUsers, color: "#f59e0b" },
+    
     { icon: "clock", label: "Gözləyən müraciət", value: stats!.pendingRequests, color: "#ef4444" },
     { icon: "dollar-sign", label: "Ödənilməmiş komissiya", value: `${stats!.unpaidCommission} ₽`, color: "#10b981" },
-    
+    { icon: "activity", label: "Aktiv istifadəçilər", value: stats!.activeUsers, color: "#22c55e" },
+    { icon: "calendar", label: "Bugünkü girişlər", value: stats!.todayOpens, color: "#3b82f6" },
+    { icon: "bar-chart", label: "Aylıq girişlər", value: stats!.monthOpens, color: "#8b5cf6" },
+    { icon: "trending-up", label: "Ümumi girişlər", value: stats!.totalOpens, color: "#f97316" },
   ];
 
   return (
