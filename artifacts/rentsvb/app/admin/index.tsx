@@ -557,7 +557,11 @@ function AddRentalModal({ colors, insets, onClose, onSaved, commissionRate }: {
       note: note || null,
     });
     setSaving(false);
-    if (error) { Alert.alert("Xəta", error.message); return; }
+    if (error) {
+  console.log(error);
+  Alert.alert("Xəta", JSON.stringify(error));
+  return;
+}
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     onSaved();
     onClose();
