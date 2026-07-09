@@ -79,6 +79,10 @@ type Stats = {
   totalUsers: number;
   pendingRequests: number;
   unpaidCommission: number;
+
+  activeUsers: number;
+  todayOpens: number;
+  totalOpens: number;
 };
 
 const TABS: { key: Tab; icon: string; label: string }[] = [
@@ -287,23 +291,42 @@ function StatsTab({ colors, insets }: { colors: any; insets: any }) {
 
   useEffect(() => {
     const load = async () => {
-      const [props, owners, users, pending, rentals] = await Promise.all([
+      const [props, owners, users, pending, rentals, appEvents, appEventsUsers] = await Promise.all([
         supabase.from("properties").select("id, status"),
         supabase.from("profiles").select("id").eq("role", "owner"),
         supabase.from("profiles").select("id").eq("role", "user"),
         supabase.from("owner_requests").select("id").eq("status", "pending"),
         supabase.from("rentals").select("commission_amount, is_paid").eq("is_paid", false),
+        supabase.from("app_events").select("id", { count: "exact", head: true }),
+        supabase.from("app_events").select("telegram_id, created_at")
       ]);
       const properties = props.data || [];
       const unpaid = (rentals.data || []).reduce((sum, r) => sum + r.commission_amount, 0);
+      const totalOpens = appEvents.count || 0;
+
+const uniqueUsers = new Set(
+  (appEventsUsers.data || [])
+    .map(x => x.telegram_id)
+    .filter(Boolean)
+).size;
+
+const today = new Date().toISOString().slice(0, 10);
+
+const todayOpens = (appEventsUsers.data || []).filter(x =>
+  x.created_at?.startsWith(today)
+).length;
       setStats({
-        totalListings: properties.length,
-        availableListings: properties.filter(p => p.status === "available").length,
-        totalOwners: (owners.data || []).length,
-        totalUsers: (users.data || []).length,
-        pendingRequests: (pending.data || []).length,
-        unpaidCommission: unpaid,
-      });
+  totalListings: properties.length,
+  availableListings: properties.filter(p => p.status === "available").length,
+  totalOwners: (owners.data || []).length,
+  totalUsers: (users.data || []).length,
+  pendingRequests: (pending.data || []).length,
+  unpaidCommission: unpaid,
+
+  activeUsers: uniqueUsers,
+  todayOpens: todayOpens,
+  totalOpens: totalOpens,
+});
       setLoading(false);
     };
     load();
@@ -318,6 +341,7 @@ function StatsTab({ colors, insets }: { colors: any; insets: any }) {
     { icon: "users", label: "İstifadəçilər", value: stats!.totalUsers, color: "#f59e0b" },
     { icon: "clock", label: "Gözləyən müraciət", value: stats!.pendingRequests, color: "#ef4444" },
     { icon: "dollar-sign", label: "Ödənilməmiş komissiya", value: `${stats!.unpaidCommission} ₽`, color: "#10b981" },
+    
   ];
 
   return (
@@ -520,18 +544,38 @@ function AddRentalModal({ colors, insets, onClose, onSaved, commissionRate }: {
     supabase.from("profiles").select("id, full_name, phone").eq("role", "owner").then(({ data }) => setOwners(data || []));
   }, []);
 
-  useEffect(() => {
-    if (!selectedOwner) return;
-    supabase.from("properties").select("id, address, price_weekday").eq("owner_id", selectedOwner).then(({ data }) => {
+ useEffect(() => {
+  if (!selectedOwner) return;
+
+  supabase
+    .from("properties")
+    .select("id, address, price_weekday")
+    .eq("owner_id", selectedOwner)
+    .then(({ data, error }) => {
+      console.log("SELECTED OWNER:", selectedOwner);
+      console.log("PROPERTIES:", data);
+      console.log("PROPERTY ERROR:", error);
+
       setProperties(data || []);
+
       if (data && data.length > 0) {
         setSelectedProperty(data[0].id);
         setPricePerDay(String(data[0].price_weekday));
       }
     });
-  }, [selectedOwner]);
+}, [selectedOwner]);
 
   const save = async () => {
+    alert("SAVE CLICKED");
+    console.log("SAVE CLICKED");
+    console.log({
+    selectedOwner,
+    selectedProperty,
+    startDate,
+    endDate,
+    pricePerDay,
+});
+    
     if (!selectedOwner || !selectedProperty || !startDate || !endDate || !pricePerDay) {
       Alert.alert("Xəta", "Bütün sahələri doldurun");
       return;

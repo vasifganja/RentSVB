@@ -63,6 +63,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (data) {
           // Admin isə rolu məcburi admin et (DB-də rol düzgün olmasa belə)
           const resolved: Profile = isAdmin ? { ...data, role: "admin" } : data;
+          await supabase
+          .from("profiles")
+          .update({
+          last_seen: new Date().toISOString(),
+  })
+          .eq("id", data.id);
           setProfile(resolved);
           await AsyncStorage.setItem("rentsvb_profile", JSON.stringify(resolved));
           return;
