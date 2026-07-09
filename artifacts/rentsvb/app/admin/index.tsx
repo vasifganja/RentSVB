@@ -544,6 +544,7 @@ function AddRentalModal({ colors, insets, onClose, onSaved, commissionRate }: {
     const commission = Math.round(price * days * rate / 100);
 
     setSaving(true);
+    console.log("INSERT START");
     const { error } = await supabase.from("rentals").insert({
       property_id: selectedProperty,
       owner_id: selectedOwner,
@@ -557,11 +558,14 @@ function AddRentalModal({ colors, insets, onClose, onSaved, commissionRate }: {
       note: note || null,
     });
     setSaving(false);
-    if (error) {
-  console.log(error);
+    console.log("INSERT ERROR:", error);
+
+if (error) {
   Alert.alert("Xəta", JSON.stringify(error));
   return;
 }
+
+console.log("INSERT OK");
     await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     onSaved();
     onClose();
