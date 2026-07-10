@@ -49,27 +49,60 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Telegram SDK hazır olana qədər gözlə (dinamik yüklənir)
       await ensureTelegramReady();
       const tgUser = getTelegramUser();
+      
 
       if (tgUser) {
         const isAdmin = Number(tgUser.id) === ADMIN_TELEGRAM_ID;
 
         // Real profili DB-dən telegram_id ilə oxu — real UUID lazımdır (elan owner_id üçün)
         const { data } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("telegram_id", tgUser.id)
-          .maybeSingle();
+  .from("profiles")
+  .select("*")
+  .eq("telegram_id", tgUser.id)
+  .maybeSingle();
 
-        if (data) {
-          // Admin isə rolu məcburi admin et (DB-də rol düzgün olmasa belə)
-          const resolved: Profile = isAdmin ? { ...data, role: "admin" } : data;
+let profileData = data;
+
+if (!profileData) {
+  const { data: created, error: createError } = await supabase
+    .from("profiles")
+    .insert({
+      full_name: `${tgUser.first_name}${tgUser.last_name ? " " + tgUser.last_name : ""}`,
+      telegram_username: tgUser.username ?? null,
+      telegram_id: tgUser.id,
+      role: Number(tgUser.id) === ADMIN_TELEGRAM_ID ? "admin" : "user",
+      is_approved: true,
+      is_blocked: false,
+    })
+    .select()
+    .single();
+
+  if (createError) throw createError;
+
+  profileData = created;
+}
+
+        if (profileData) {
+  // Admin isə rolu məcburi admin et (DB-də rol düzgün olmasa belə)
+  const resolved: Profile = isAdmin
+    ? { ...profileData, role: "admin" }
+    : profileData;
           await supabase
-          .from("profiles")
-          .update({
-          last_seen: new Date().toISOString(),
+  .from("profiles")
+  .update({
+    last_seen: new Date().toISOString(),
   })
-          .eq("id", data.id);
-          setProfile(resolved);
+.eq("id", profileData.id);
+const { data: eventData, error } = await supabase
+  .from("app_events")
+  .insert({
+    event: "app_open",
+    telegram_id: String(tgUser.id),
+  })
+  .select();
+
+
+setProfile(resolved);
           await AsyncStorage.setItem("rentsvb_profile", JSON.stringify(resolved));
           return;
         }
@@ -120,9 +153,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setProfile(data);
         await AsyncStorage.setItem("rentsvb_profile", JSON.stringify(data));
       }
-    } catch {
-      // ignore
-    }
+    } catch (e) {
+  console.error("AuthContext error:", e);
+}
   }, [profile]);
 
   const setGuestProfile = useCallback(async (p: Profile) => {

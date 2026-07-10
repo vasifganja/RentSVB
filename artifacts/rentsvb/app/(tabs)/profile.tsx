@@ -25,6 +25,7 @@ export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { profile, signOut, setGuestProfile } = useAuth();
+  console.log("PROFILE:", profile);
   const { lang, setLang, tr } = useLang();
   const [showOwnerForm, setShowOwnerForm] = useState(false);
   const [showLangPicker, setShowLangPicker] = useState(false);
@@ -43,12 +44,13 @@ export default function ProfileScreen() {
     try {
       const tgUser = getTelegramUser();
       const { error } = await supabase.from("owner_requests").insert({
-        full_name: name.trim(),
-        phone: phone.trim(),
-        telegram_username: telegram.trim() || (tgUser?.username ? `@${tgUser.username}` : null),
-        telegram_id: tgUser?.id ?? null,
-        status: "pending",
-      });
+  profile_id: profile?.id,
+  full_name: name.trim(),
+  phone: phone.trim(),
+  telegram_username: telegram.trim() || (tgUser?.username ? `@${tgUser.username}` : null),
+  telegram_id: tgUser?.id ?? null,
+  status: "pending",
+});
       if (error) throw error;
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setSubmitted(true);
@@ -108,8 +110,8 @@ export default function ProfileScreen() {
                   <Text style={[styles.formDesc, { color: colors.mutedForeground }]}>
                     {tr("becomeOwnerDesc")}
                   </Text>
-                  <InputField label={tr("fullName")} value={name} onChangeText={setName} placeholder="Rəşad Əliyev" colors={colors} />
-                  <InputField label={tr("phone")} value={phone} onChangeText={setPhone} placeholder="+7 999 123 45 67" keyboardType="phone-pad" colors={colors} />
+                  Kirayə qeydi əlavə etField label={tr("fullName")} value={name} onChangeText={setName} placeholder="Rəşad Əliyev" colors={colors} />
+                  Kirayə qeydi əlavə etField label={tr("phone")} value={phone} onChangeText={setPhone} placeholder="+7 999 123 45 67" keyboardType="phone-pad" colors={colors} />
                   <InputField label={tr("telegramUsername")} value={telegram} onChangeText={setTelegram} placeholder="@username" colors={colors} />
                   <TouchableOpacity
                     style={[styles.submitBtn, { backgroundColor: colors.primary }, submitting && { opacity: 0.7 }]}

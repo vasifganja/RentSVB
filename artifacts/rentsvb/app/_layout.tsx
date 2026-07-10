@@ -22,6 +22,7 @@ import {
   getTelegramUser,
   isTelegramWebApp,
 } from "@/lib/telegram";
+import { supabase } from "@/lib/supabase";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -53,6 +54,29 @@ function TelegramInit() {
       if (!isTelegramWebApp()) return;
       const tgUser = getTelegramUser();
       if (!tgUser) return;
+      const { data: profile } = await supabase
+  .from("profiles")
+  .select("id")
+  .eq("telegram_id", tgUser.id)
+  .maybeSingle();
+
+if (profile) {
+  await supabase
+    .from("profiles")
+    .update({
+      last_seen: new Date().toISOString(),
+    })
+    .eq("id", profile.id);
+
+  const { error } = await supabase
+  .from("app_events")
+  .insert({
+    event: "app_open",
+    telegram_id: String(tgUser.id),
+  });
+
+console.log("APP_EVENTS ERROR:", error);
+}
 
       // Dil seçimi: yalnız istifadəçi hələ dil seçməyibsə Telegram dilini tətbiq et
       const savedLang = await AsyncStorage.getItem("rentsvb_lang");
