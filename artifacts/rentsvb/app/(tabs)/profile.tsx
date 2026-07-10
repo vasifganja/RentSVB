@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -34,8 +34,80 @@ export default function ProfileScreen() {
   const [telegram, setTelegram] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [ownerStats, setOwnerStats] = useState({
+  active: 0,
+  rentedThisMonth: 0,
+  incomeThisMonth: 0,
+  debt: 0,
+});
+const [salaryDebts, setSalaryDebts] = useState<any[]>([]);
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
+
+useEffect(() => {
+  if (profile?.role !== "owner" || !profile?.id) return;
+
+  const loadOwnerStats = async () => {
+    const month = new Date().toISOString().slice(0, 7);
+
+    const { data: properties } = await supabase
+      .from("properties")
+      .select("id,status")
+      .eq("owner_id", profile.id);
+
+    const { data: rentals } = await supabase
+  .from("rentals")
+  .select(`
+  commission_amount,
+  created_at,
+  paid_at,
+  is_paid,
+  payment_method,
+  customer_name,
+  property:properties(address)
+`)
+  .eq("owner_id", profile.id);
+
+    const active = (properties || []).filter(
+      (p) => p.status === "available"
+    ).length;
+
+    const rentedThisMonth = (rentals || []).filter(
+  (r) => r.paid_at?.startsWith(month)
+).length;
+
+    const incomeThisMonth = (rentals || [])
+  .filter((r) => r.paid_at?.startsWith(month))
+      .reduce((sum, r) => sum + r.commission_amount, 0);
+      const debt = (rentals || [])
+  .filter(
+    (r) =>
+      !r.is_paid &&
+      r.payment_method === "salary"
+  )
+  .reduce(
+    (sum, r) => sum + r.commission_amount,
+    0
+  );
+
+  setOwnerStats({
+  active,
+  rentedThisMonth,
+  incomeThisMonth,
+  debt,
+});
+
+setSalaryDebts(
+  (rentals || []).filter(
+    (r) =>
+      !r.is_paid &&
+      r.payment_method === "salary"
+  )
+);
+}; // <-- bunu əlavə et
+
+loadOwnerStats();
+}, [profile]);
 
   const handleOwnerRequest = async () => {
     if (!name.trim()) { showAlert(tr("nameRequired"), tr("error")); return; }
@@ -75,6 +147,140 @@ export default function ProfileScreen() {
         contentContainerStyle={{ paddingBottom: Platform.OS === "web" ? 34 + 84 : insets.bottom + 90 }}
         showsVerticalScrollIndicator={false}
       >
+        {profile?.role === "owner" && (
+  <View style={{ marginBottom: 20 }}>
+    <Text
+      style={{
+        color: colors.mutedForeground,
+        fontWeight: "700",
+        marginBottom: 10,
+      }}
+    >
+      {tr("statistics")}
+    </Text>
+
+    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
+
+      <View
+        style={{
+          width: "48%",
+          backgroundColor: colors.card,
+          borderRadius: 14,
+          padding: 14,
+        }}
+      >
+        <Text style={{ color: colors.mutedForeground }}>
+          🏠 {tr("activeListings")}
+        </Text>
+        <Text style={{ color: colors.foreground, fontSize: 22, fontWeight: "700" }}>
+          {ownerStats.active}
+        </Text>
+      </View>
+
+      <View
+        style={{
+          width: "48%",
+          backgroundColor: colors.card,
+          borderRadius: 14,
+          padding: 14,
+        }}
+      >
+        <Text style={{ color: colors.mutedForeground }}>
+          ✅ {tr("rentedThisMonth")}
+        </Text>
+        <Text style={{ color: colors.foreground, fontSize: 22, fontWeight: "700" }}>
+          {ownerStats.rentedThisMonth}
+        </Text>
+      </View>
+
+      <View
+        style={{
+          width: "48%",
+          backgroundColor: colors.card,
+          borderRadius: 14,
+          padding: 14,
+        }}
+      >
+        <Text style={{ color: colors.mutedForeground }}>
+          💰 {tr("incomeThisMonth")}
+        </Text>
+        <Text style={{ color: colors.foreground, fontSize: 22, fontWeight: "700" }}>
+          {ownerStats.incomeThisMonth} ₽
+        </Text>
+      </View>
+
+      <View
+        style={{
+          width: "48%",
+          backgroundColor: colors.card,
+          borderRadius: 14,
+          padding: 14,
+        }}
+      >
+        <Text style={{ color: colors.mutedForeground }}>
+          🧾 {tr("commissionDebt")}
+        </Text>
+        <Text style={{ color: colors.foreground, fontSize: 22, fontWeight: "700" }}>
+          {ownerStats.debt} ₽
+        </Text>
+      </View>
+
+    </View>
+
+{salaryDebts.length > 0 && (
+  <View
+    style={{
+      marginTop: 20,
+      backgroundColor: colors.card,
+      borderRadius: 14,
+      padding: 14,
+    }}
+  >
+    <Text
+      style={{
+        color: colors.foreground,
+        fontWeight: "700",
+        fontSize: 16,
+        marginBottom: 12,
+      }}
+    >
+      🧾 {tr("salaryDebts")}
+    </Text>
+
+    {salaryDebts.map((r, i) => (
+      <View
+        key={i}
+        style={{
+          paddingVertical: 10,
+          borderBottomWidth: i === salaryDebts.length - 1 ? 0 : 1,
+          borderBottomColor: colors.border,
+        }}
+      >
+        <Text style={{ color: colors.foreground, fontWeight: "600" }}>
+          👤 {r.customer_name || tr("unknownCustomer")}
+        </Text>
+
+        <Text style={{ color: colors.mutedForeground }}>
+          🏠 {r.property?.address || "-"}
+        </Text>
+
+        <Text
+          style={{
+            color: "#ef4444",
+            fontWeight: "700",
+            marginTop: 4,
+          }}
+        >
+          💰 {r.commission_amount} ₽
+        </Text>
+      </View>
+    ))}
+  </View>
+)}
+)}
+  </View>
+
+)}
         {/* Header */}
         <View style={[styles.header, { paddingTop: topPad + 16, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
           <View style={[styles.avatar, { backgroundColor: colors.primary }]}>

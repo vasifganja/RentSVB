@@ -111,13 +111,15 @@ export default function FinanceTab({
 
     await supabase
       .from("rentals")
-      .update({
-        is_paid: newStatus,
-        paid_at: newStatus
-          ? new Date().toISOString()
-          : null,
-      })
-      .eq("id", rental.id);
+      await supabase
+  .from("rentals")
+  .update({
+    is_paid: !rental.is_paid,
+    paid_at: rental.is_paid
+      ? null
+      : new Date().toISOString(),
+  })
+  .eq("id", rental.id);
 
     setRentals((prev) =>
       prev.map((r) =>

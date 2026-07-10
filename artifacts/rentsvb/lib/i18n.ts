@@ -246,6 +246,13 @@ export const t: Record<Lang, Record<string, string>> = {
     totalOwners: "Owners",
     totalUsers: "Users",
     pendingRequests: "Pending approval",
+    
+activeListings: "Active listings",
+rentedThisMonth: "Rented this month",
+incomeThisMonth: "Income this month",
+commissionDebt: "Commission debt",
+salaryDebts: "Salary debts",
+unknownCustomer: "Unknown customer",
   },
 
   az: {
@@ -356,6 +363,12 @@ export const t: Record<Lang, Record<string, string>> = {
     totalOwners: "Ev sahibləri",
     totalUsers: "İstifadəçilər",
     pendingRequests: "Gözləyən müraciətlər",
+activeListings: "Aktiv elanlar",
+rentedThisMonth: "Bu ay verilən",
+incomeThisMonth: "Bu ay qazanc",
+commissionDebt: "Komissiya borcu",
+salaryDebts: "Maaşa qədər verilənlər",
+unknownCustomer: "Adsız müştəri",
   },
 
   tr: {
@@ -466,5 +479,11 @@ export const t: Record<Lang, Record<string, string>> = {
     totalOwners: "Ev sahipleri",
     totalUsers: "Kullanıcılar",
     pendingRequests: "Onay bekleyen",
+activeListings: "Aktif ilanlar",
+rentedThisMonth: "Bu ay kiralanan",
+incomeThisMonth: "Bu ay gelir",
+commissionDebt: "Komisyon borcu",
+salaryDebts: "Maaşa kadar borçlar",
+unknownCustomer: "Bilinmeyen müşteri",
   },
 };

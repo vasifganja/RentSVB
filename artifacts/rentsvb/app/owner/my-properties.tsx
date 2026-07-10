@@ -1,3 +1,4 @@
+import { useLang } from "@/context/LangContext";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
@@ -28,6 +29,7 @@ const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
 
 export default function MyPropertiesScreen() {
   const colors = useColors();
+  const { tr } = useLang();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { profile } = useAuth();

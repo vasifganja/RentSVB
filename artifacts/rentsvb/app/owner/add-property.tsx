@@ -17,21 +17,23 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@/context/AuthContext";
 import { useColors } from "@/hooks/useColors";
+import { useLang } from "@/context/LangContext";
 import { notifyNewListing, showAlert } from "@/lib/telegram";
 import { supabase } from "@/lib/supabase";
 
-const STEPS = [
-  "Otaq sayı",
-  "Ünvan",
-  "Qiymət",
-  "Adam sayı",
-  "Kredit",
-  "Şəkillər",
-  "Təsvir",
-];
 
 export default function AddPropertyScreen() {
   const colors = useColors();
+  const { tr } = useLang();
+  const STEPS = [
+  tr("roomsCount"),
+  tr("address"),
+  tr("dailyPrice"),
+  tr("maxPeopleCount"),
+  tr("credit"),
+  tr("photos"),
+  tr("description"),
+];
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { profile } = useAuth();

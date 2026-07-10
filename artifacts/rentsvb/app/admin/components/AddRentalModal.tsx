@@ -130,7 +130,7 @@ export default function AddRentalModal({
         paymentMethod === "salary" ? "pending" : "paid",
 
       is_paid: false,
-      paid_at: new Date().toISOString(),
+      paid_at: null,
 
       note: note || null,
     });
