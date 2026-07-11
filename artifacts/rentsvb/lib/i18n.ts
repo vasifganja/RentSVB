@@ -4,7 +4,6 @@ export const LANGUAGES: { code: Lang; label: string; flag: string }[] = [
   { code: "ru", label: "Русский", flag: "🇷🇺" },
   { code: "en", label: "English", flag: "🇬🇧" },
   { code: "az", label: "Azərbaycan", flag: "🇦🇿" },
-  { code: "tr", label: "Türkçe", flag: "🇹🇷" },
 ];
 
 export const t: Record<Lang, Record<string, string>> = {
@@ -136,6 +135,72 @@ export const t: Record<Lang, Record<string, string>> = {
     totalOwners: "Хозяев",
     totalUsers: "Пользователей",
     pendingRequests: "Ожидают одобрения",
+    roomsQuestion: "Сколько комнат?",
+addressInfo: "Информация об адресе",
+districtPlaceholder: "Центр, район...",
+addressPlaceholder: "Улица, дом",
+price: "Цена",
+
+fixedPrice: "💰 Фиксированная цена",
+fixedPriceDesc: "Одинаковая цена каждый день",
+
+weekdayWeekend: "📅 Будни / Выходные",
+weekdayWeekendDesc: "Разные цены",
+
+negotiablePrice: "🤝 По договорённости",
+negotiablePriceDesc: "Цена обсуждается",
+
+maxPeopleQuestion: "Сколько человек?",
+
+creditOptions: "Варианты кредита",
+
+salaryCredit: "До зарплаты",
+salaryCreditDesc: "Оплата после зарплаты",
+
+advanceCredit: "До аванса",
+advanceCreditDesc: "Оплата после аванса",
+
+photosHint: "Добавьте до 5 фотографий",
+
+shortDescription: "Описание",
+
+descriptionPlaceholder: "Кратко опишите квартиру",
+
+next: "Далее",
+publish: "Опубликовать",
+
+listingCreated: "Объявление успешно опубликовано!",
+
+negotiableHint:
+  "Цена не будет показана. Арендатор свяжется с вами для обсуждения.",
+  weekdayPrice: "Цена в будни (₽)",
+weekdayPricePlaceholder: "Например: 5000",
+
+weekendPrice: "Цена в выходные (₽)",
+weekendPricePlaceholder: "Например: 7000",
+
+maxPeopleQuestion: "Максимум гостей",
+
+creditOptions: "Кредит",
+
+salaryCreditDesc: "До зарплаты",
+
+advanceCreditDesc: "До аванса",
+
+photosHint: "Можно добавить до 5 фотографий",
+
+shortDescription: "Краткое описание",
+
+descriptionPlaceholder: "Опишите квартиру...",
+
+negotiableHint:
+"Цена не отображается. Арендатор свяжется с вами напрямую.",
+view: "Просмотр",
+edit: "Редактировать",
+empty: "Свободно",
+occupied: "Занято",
+salary: "До зарплаты",
+    
   },
 
   en: {
@@ -253,6 +318,48 @@ incomeThisMonth: "Income this month",
 commissionDebt: "Commission debt",
 salaryDebts: "Salary debts",
 unknownCustomer: "Unknown customer",
+fixedPrice: "Fixed price",
+fixedPriceDesc: "Same price every day",
+weekdayWeekend: "Weekday / Weekend",
+weekdayWeekendDesc: "Two different prices",
+negotiablePrice: "Negotiable",
+negotiablePriceDesc: "Price is discussed",
+roomsQuestion: "How many rooms?",
+addressInfo: "Address information",
+districtPlaceholder: "Center, district...",
+addressPlaceholder: "Street, house number",
+price: "Price",
+view: "View",
+edit: "Edit",
+status: "Status",
+weekdayPrice: "Weekday price (₽)",
+weekdayPricePlaceholder: "Example: 5000",
+
+weekendPrice: "Weekend price (₽)",
+weekendPricePlaceholder: "Example: 7000",
+
+maxPeopleQuestion: "Maximum guests",
+
+creditOptions: "Credit options",
+
+salaryCreditDesc: "Rent until payday",
+
+advanceCreditDesc: "Rent until advance payment",
+
+photosHint: "Upload up to 5 photos",
+
+shortDescription: "Short description",
+
+descriptionPlaceholder: "Describe the apartment...",
+
+negotiableHint:
+"Price will not be shown publicly...",
+
+view: "View",
+edit: "Edit",
+empty: "Available",
+occupied: "Occupied",
+salary: "Until payday",
   },
 
   az: {
@@ -369,121 +476,62 @@ incomeThisMonth: "Bu ay qazanc",
 commissionDebt: "Komissiya borcu",
 salaryDebts: "Maaşa qədər verilənlər",
 unknownCustomer: "Adsız müştəri",
-  },
+fixedPrice: "Sabit qiymət",
+fixedPriceDesc: "Hər gün eyni qiymət",
+weekdayWeekend: "Həftəiçi / Həftəsonu",
+weekdayWeekendDesc: "İki fərqli qiymət",
+negotiablePrice: "Razılaşma yolu ilə",
+negotiablePriceDesc: "Qiymət söhbətlə müəyyən olunur",
+roomsQuestion: "Otaq sayı neçədir?",
+addressInfo: "Ünvan məlumatları",
+districtPlaceholder: "Mərkəz, Mikrorayon...",
+addressPlaceholder: "Küçə, ev nömrəsi",
+price: "Qiymət",
+view: "Bax",
+edit: "Redaktə",
+status: "Status",
+dailyPricePlaceholder: "3000",
+weekdayPrice: "Həftəiçi qiymət (₽)",
+weekdayPricePlaceholder: "2500",
+weekendPricePlaceholder: "3500",
 
-  tr: {
-    appName: "RentSVB",
-    appSubtitle: "Svobodny Kiralıkları",
-    welcome: "Hoş Geldiniz",
-    welcomeDesc: "Svobodny'deki işçiler için günlük kiralık platformu — hızlı ve kolay",
-    continue: "Devam",
-    chooseLanguage: "Dil seçin",
-    listings: "İlanlar",
-    profile: "Profil",
-    searchPlaceholder: "Semt, adres ara...",
-    filter: "Filtre",
-    listings_count: "ilan",
-    noListings: "İlan bulunamadı",
-    noListingsDesc: "Filtreleri değiştirin veya daha sonra kontrol edin",
-    refresh: "Yenile",
-    filters: "Filtreler",
-    rooms: "Oda",
-    maxPeople: "Kapasite",
-    salaryCredit: "Maaşa kadar",
-    advanceCredit: "Avans kredi",
-    maxPrice: "Maks. fiyat (₽/gün)",
-    apply: "Uygula",
-    reset: "Sıfırla",
-    any: "Herhangi",
-    available: "Müsait",
-    busy: "Dolu",
-    salary_credit: "Maaşa kadar",
-    perDay: "₽/gün",
-    perDayWeekend: "hafta sonu",
-    people: "kişi",
-    room: "oda",
-    roomApartment: " odalı daire",
-    perDaySuffix: "/gün",
-    weekendShort: "h.sonu",
-    salaryTag: "Maaş",
-    advanceTag: "Avans",
-    noImage: "Fotoğraf yok",
-    negotiable: "Anlaşmalı",
-    credit: "Kredi",
-    owner: "Ev sahibi",
-    call: "Ara",
-    telegram: "Telegram",
-    description: "Açıklama",
-    statusChange: "Durum değiştir",
-    priceInfo: "Fiyat",
-    weekday: "Hafta içi",
-    weekend: "Hafta sonu",
-    guest: "Misafir",
-    user: "Kullanıcı",
-    ownerRole: "Ev sahibi",
-    admin: "Admin",
-    ownerPanel: "Ev Sahibi Paneli",
-    addListing: "İlan ekle",
-    myListings: "İlanlarım",
-    adminPanel: "Admin Paneli",
-    becomeOwner: "Ev Sahibi Ol",
-    becomeOwnerDesc: "Başvuru gönderin, admin onaylayacak",
-    requestSent: "Başvuru gönderildi! Admin yakında cevap verecek.",
-    sendRequest: "Başvuru gönder",
-    sending: "Gönderiliyor...",
-    cancel: "İptal",
-    signOut: "Çıkış",
-    about: "Hakkında",
-    settings: "Ayarlar",
-    language: "Dil",
-    app: "Uygulama",
-    fullName: "Ad Soyad",
-    phone: "Telefon numarası",
-    telegramUsername: "Telegram (isteğe bağlı)",
-    required: "Zorunlu alan",
-    error: "Hata",
-    nameRequired: "Adınızı girin",
-    phoneRequired: "Telefon girin",
-    addProperty: "İlan ekle",
-    address: "Adres",
-    district: "Semt",
-    roomsCount: "Oda sayısı",
-    maxPeopleCount: "Maksimum kişi",
-    dailyPrice: "Günlük fiyat (₽)",
-    weekendPrice: "Hafta sonu fiyatı (₽)",
-    differentWeekendPrice: "Farklı hafta sonu fiyatı",
-    acceptSalaryCredit: "Maaşa kadar kabul ediyorum",
-    acceptAdvanceCredit: "Avans kreditle kabul ediyorum",
-    additionalInfo: "Ek bilgi",
-    photos: "Fotoğraflar",
-    addPhotos: "Fotoğraf ekle",
-    publish: "Yayımla",
-    publishing: "Yayımlanıyor...",
-    published: "Yayımlandı!",
-    next: "İleri",
-    back: "Geri",
-    skip: "Geç",
-    adminTitle: "Admin",
-    ownerRequests: "Ev sahibi başvuruları",
-    allListings: "Tüm ilanlar",
-    users: "Kullanıcılar",
-    statistics: "İstatistik",
-    pending: "Bekliyor",
-    approved: "Onaylandı",
-    rejected: "Reddedildi",
-    approve: "Onayla",
-    reject: "Reddet",
-    block: "Engelle",
-    delete: "Sil",
-    totalListings: "Toplam ilan",
-    totalOwners: "Ev sahipleri",
-    totalUsers: "Kullanıcılar",
-    pendingRequests: "Onay bekleyen",
-activeListings: "Aktif ilanlar",
-rentedThisMonth: "Bu ay kiralanan",
-incomeThisMonth: "Bu ay gelir",
-commissionDebt: "Komisyon borcu",
-salaryDebts: "Maaşa kadar borçlar",
-unknownCustomer: "Bilinmeyen müşteri",
+maxPeopleQuestion: "Neçə nəfər yerləşər?",
+creditOptions: "Kredit seçimi",
+
+salaryCreditDesc: "Maaş gününə qədər nisyə",
+advanceCreditDesc: "Avans gününə qədər nisyə",
+
+photosHint: "Minimum 2, maksimum 5 şəkil tövsiyə olunur",
+add: "Əlavə et",
+
+shortDescription: "Qısa təsvir (istəyə bağlı)",
+descriptionPlaceholder: "Mənzil haqqında qısa məlumat yazın...",
+weekdayPrice: "Həftəiçi qiyməti (₽)",
+weekdayPricePlaceholder: "Məs: 5000",
+
+weekendPrice: "Həftəsonu qiyməti (₽)",
+weekendPricePlaceholder: "Məs: 7000",
+
+maxPeopleQuestion: "Maksimum qonaq sayı",
+
+creditOptions: "Kredit seçimi",
+
+salaryCreditDesc: "Maaşa qədər verilir",
+
+advanceCreditDesc: "Avansa qədər verilir",
+
+photosHint: "5 şəkilə qədər əlavə edə bilərsiniz",
+
+shortDescription: "Qısa təsvir",
+
+descriptionPlaceholder: "Mənzili qısa təsvir edin...",
+
+negotiableHint:
+"Qiymət göstərilməyəcək. Kirayəçi sizinlə əlaqə saxlayacaq.",
+view: "Bax",
+edit: "Redaktə",
+empty: "Boşdur",
+occupied: "Doludur",
+salary: "Maaşa qədər",
   },
 };

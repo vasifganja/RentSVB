@@ -97,17 +97,16 @@ export default function AddPropertyScreen() {
     // İkiqat basmanın qarşısını al (state gecikməsindən asılı olmadan)
     if (submittingRef.current) return;
     if (!address) {
-      showAlert("Ünvan yazın", "Xəta");
+      showAlert(tr("addressRequired"), tr("error"));
       return;
     }
     if (priceType !== "negotiable" && !priceWeekday) {
-      showAlert("Qiymət yazın", "Xəta");
+      showAlert(tr("priceRequired"), tr("error"));
       return;
     }
     // Real profil UUID-i olmalıdır (yoxsa owner_id FK xətası verir)
     if (!profile || profile.id === "admin") {
-      showAlert("Profil hazır deyil, tətbiqi yenidən açın", "Xəta");
-      return;
+showAlert(tr("profileNotReady"), tr("error"));      return;
     }
     submittingRef.current = true;
     setSubmitting(true);
@@ -140,14 +139,17 @@ export default function AddPropertyScreen() {
       });
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       // Web-də Alert callback işləmir — birbaşa keçid + təsdiq bildirişi
-      showAlert("Elan uğurla yerləşdirildi!");
+      showAlert(tr("listingCreated"), tr("success"));
       router.replace("/owner/my-properties");
     } catch (e: any) {
-      showAlert(e.message || "Elan yaradılmadı", "Xəta");
-    } finally {
-      submittingRef.current = false;
-      setSubmitting(false);
-    }
+  showAlert(
+    e.message || tr("listingCreateError"),
+    tr("error")
+  );
+} finally {
+  submittingRef.current = false;
+  setSubmitting(false);
+}
   };
 
   const canGoNext = () => {
@@ -160,7 +162,7 @@ export default function AddPropertyScreen() {
     switch (step) {
       case 0:
         return (
-          <StepContainer title="Otaq sayı neçədir?" colors={colors}>
+          <StepContainer title={tr("roomsQuestion")} colors={colors}>
             <View style={styles.chips}>
               {[1, 2, 3, 4, 5].map((r) => (
                 <TouchableOpacity
@@ -189,7 +191,7 @@ export default function AddPropertyScreen() {
                       fontSize: 12,
                     }}
                   >
-                    otaq
+                    {tr("room")}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -198,19 +200,19 @@ export default function AddPropertyScreen() {
         );
       case 1:
         return (
-          <StepContainer title="Ünvan məlumatları" colors={colors}>
-            <FormInput label="Rayon" value={district} onChangeText={setDistrict} placeholder="Mərkəz, Mikrorayon..." colors={colors} />
-            <FormInput label="Ünvan" value={address} onChangeText={setAddress} placeholder="Küçə, ev nömrəsi" colors={colors} />
+          <StepContainer title={tr("addressInfo")} colors={colors}>
+            <FormInput label={tr("district")} value={district} onChangeText={setDistrict} placeholder={tr("districtPlaceholder")} colors={colors} />
+            <FormInput label={tr("address")} value={address} onChangeText={setAddress} placeholder={tr("addressPlaceholder")} colors={colors} />
           </StepContainer>
         );
       case 2:
         return (
-          <StepContainer title="Qiymət" colors={colors}>
+          <StepContainer title={tr("price")} colors={colors}>
             <View style={{ gap: 8 }}>
               {[
-                { value: "fixed", label: "💰 Sabit qiymət", desc: "Hər gün eyni qiymət" },
-                { value: "weekday_weekend", label: "📅 Həftəiçi / Həftəsonu", desc: "İki fərqli qiymət" },
-                { value: "negotiable", label: "🤝 Razılaşma yolu ilə", desc: "Qiymət söhbətlə müəyyən olunur" },
+                { value: "fixed", label: `💰 ${tr("fixedPrice")}`, desc: tr("fixedPriceDesc") },
+                { value: "weekday_weekend", label: `📅 ${tr("weekdayWeekend")}`, desc: tr("weekdayWeekendDesc") },
+                { value: "negotiable", label: `🤝 ${tr("negotiablePrice")}`, desc: tr("negotiablePriceDesc") },
               ].map((opt) => (
                 <TouchableOpacity
                   key={opt.value}
@@ -242,10 +244,10 @@ export default function AddPropertyScreen() {
 
             {priceType === "fixed" && (
               <FormInput
-                label="Günlük qiymət (₽)"
+                label={tr("dailyPrice")}
                 value={priceWeekday}
                 onChangeText={setPriceWeekday}
-                placeholder="3000"
+                placeholder={tr("dailyPricePlaceholder")}
                 keyboardType="number-pad"
                 colors={colors}
               />
@@ -253,36 +255,53 @@ export default function AddPropertyScreen() {
             {priceType === "weekday_weekend" && (
               <>
                 <FormInput
-                  label="Həftəiçi qiymət (₽)"
+                  label={tr("weekdayPrice")}
                   value={priceWeekday}
                   onChangeText={setPriceWeekday}
-                  placeholder="2500"
+                  placeholder={tr("weekdayPricePlaceholder")}
                   keyboardType="number-pad"
                   colors={colors}
                 />
                 <FormInput
-                  label="Həftəsonu qiymət (₽)"
+                  label={tr("weekendPrice")}
                   value={priceWeekend}
                   onChangeText={setPriceWeekend}
-                  placeholder="3500"
+                  placeholder={tr("weekendPricePlaceholder")}
                   keyboardType="number-pad"
                   colors={colors}
                 />
               </>
             )}
             {priceType === "negotiable" && (
-              <View style={[styles.negotiableNote, { backgroundColor: colors.muted, borderColor: colors.border }]}>
-                <Text style={{ fontSize: 28 }}>🤝</Text>
-                <Text style={[{ color: colors.mutedForeground, fontSize: 13, flex: 1, lineHeight: 19 }]}>
-                  Qiymət elanda göstərilməyəcək. Kirayəçi sizinlə birbaşa əlaqə quraraq razılaşacaq.
-                </Text>
-              </View>
-            )}
+  <View
+    style={[
+      styles.negotiableNote,
+      {
+        backgroundColor: colors.muted,
+        borderColor: colors.border,
+      },
+    ]}
+  >
+    <Text style={{ fontSize: 28 }}>🤝</Text>
+
+    <Text
+  style={{
+    color: colors.mutedForeground,
+    fontSize: 13,
+    flex: 1,
+    lineHeight: 19,
+  }}
+>
+  {tr("negotiableHint")}
+</Text>
+</View>
+)}
+  
           </StepContainer>
         );
       case 3:
         return (
-          <StepContainer title="Neçə nəfər yerləşər?" colors={colors}>
+          <StepContainer title={tr("maxPeopleQuestion")} colors={colors}>
             <View style={styles.chips}>
               {[1, 2, 3, 4, 5, 6].map((p) => (
                 <TouchableOpacity
@@ -299,9 +318,14 @@ export default function AddPropertyScreen() {
                   <Text style={{ color: maxPeople === p ? "#fff" : colors.mutedForeground, fontWeight: "700", fontSize: 18 }}>
                     {p}
                   </Text>
-                  <Text style={{ color: maxPeople === p ? "#fff" : colors.mutedForeground, fontSize: 12 }}>
-                    nəfər
-                  </Text>
+                  <Text
+  style={{
+    color: maxPeople === p ? "#fff" : colors.mutedForeground,
+    fontSize: 12,
+  }}
+>
+  {tr("people")}
+</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -309,18 +333,18 @@ export default function AddPropertyScreen() {
         );
       case 4:
         return (
-          <StepContainer title="Kredit seçimi" colors={colors}>
+          <StepContainer title={tr("creditOptions")} colors={colors}>
             <ToggleCard
-              label="Maaşa qədər verilir"
-              description="Maaş gününə qədər nisyə"
+              label={tr("salaryCredit")}
+description={tr("salaryCreditDesc")}
               value={salaryCredit}
               onToggle={() => setSalaryCredit(!salaryCredit)}
               color="#f59e0b"
               colors={colors}
             />
             <ToggleCard
-              label="Avansa qədər verilir"
-              description="Avans gününə qədər nisyə"
+              label={tr("advanceCredit")}
+description={tr("advanceCreditDesc")}
               value={advanceCredit}
               onToggle={() => setAdvanceCredit(!advanceCredit)}
               color="#3b82f6"
@@ -330,9 +354,12 @@ export default function AddPropertyScreen() {
         );
       case 5:
         return (
-          <StepContainer title={`Şəkillər (${images.length}/5)`} colors={colors}>
+          <StepContainer
+  title={`${tr("photos")} (${images.length}/5)`}
+  colors={colors}
+>
             <Text style={[styles.hint, { color: colors.mutedForeground }]}>
-              Minimum 2, maksimum 5 şəkil tövsiyə olunur
+              {tr("photosHint")}
             </Text>
             <View style={styles.imageGrid}>
               {images.map((uri, i) => (
@@ -353,7 +380,7 @@ export default function AddPropertyScreen() {
                 >
                   <Feather name="plus" size={24} color={colors.mutedForeground} />
                   <Text style={[styles.addImgText, { color: colors.mutedForeground }]}>
-                    Əlavə et
+                    {tr("add")}
                   </Text>
                 </TouchableOpacity>
               )}
@@ -362,7 +389,10 @@ export default function AddPropertyScreen() {
         );
       case 6:
         return (
-          <StepContainer title="Qısa təsvir (istəyə bağlı)" colors={colors}>
+          <StepContainer
+  title={tr("shortDescription")}
+  colors={colors}
+>
             <TextInput
               style={[
                 styles.textarea,
@@ -374,7 +404,7 @@ export default function AddPropertyScreen() {
               ]}
               value={description}
               onChangeText={setDescription}
-              placeholder="Mənzil haqqında qısa məlumat yazın..."
+              placeholder={tr("descriptionPlaceholder")}
               placeholderTextColor={colors.mutedForeground}
               multiline
               numberOfLines={5}
@@ -404,9 +434,10 @@ export default function AddPropertyScreen() {
         <TouchableOpacity onPress={() => (step > 0 ? setStep(step - 1) : router.back())}>
           <Feather name="arrow-left" size={22} color={colors.foreground} />
         </TouchableOpacity>
+        
         <Text style={[styles.topTitle, { color: colors.foreground }]}>
-          Yeni Mənzil
-        </Text>
+  {tr("addProperty")}
+</Text>
         <Text style={[styles.stepCount, { color: colors.mutedForeground }]}>
           {step + 1}/{STEPS.length}
         </Text>
@@ -457,7 +488,7 @@ export default function AddPropertyScreen() {
             disabled={!canGoNext()}
           >
             <Text style={[styles.nextText, { color: canGoNext() ? "#fff" : colors.mutedForeground }]}>
-              Növbəti
+              {tr("next")}
             </Text>
             <Feather name="arrow-right" size={18} color={canGoNext() ? "#fff" : colors.mutedForeground} />
           </TouchableOpacity>
@@ -473,8 +504,8 @@ export default function AddPropertyScreen() {
           >
             <Feather name="check" size={18} color="#fff" />
             <Text style={styles.nextText}>
-              {submitting ? "Yerləşdirilir..." : "Elanı Yerləşdir"}
-            </Text>
+  {submitting ? tr("publishing") : tr("publish")}
+</Text>
           </TouchableOpacity>
         )}
       </View>

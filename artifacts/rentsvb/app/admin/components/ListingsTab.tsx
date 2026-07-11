@@ -98,7 +98,7 @@ export default function ListingsTab({
         },
 
         {
-          text: "Sil",
+          text: tr("delete"),
           style: "destructive",
 
           onPress: async () => {
@@ -132,9 +132,9 @@ export default function ListingsTab({
   };
 
   const STATUS_LABELS = {
-    available: "Boş",
-    busy: "Dolu",
-    salary_credit: "Maaşa qədər",
+    available: tr("occupied"),
+    busy: tr("salary"),
+    salary_credit: tr("salary"),
   };
 
   return (
