@@ -200,6 +200,10 @@ edit: "Редактировать",
 empty: "Свободно",
 occupied: "Занято",
 salary: "До зарплаты",
+city: "Город",
+svobodny: "Свободный",
+blagoveshchensk: "Благовещенск",
+confirmDelete: "Удалить это объявление?",
     
   },
 
@@ -360,6 +364,11 @@ edit: "Edit",
 empty: "Available",
 occupied: "Occupied",
 salary: "Until payday",
+city: "City",
+svobodny: "Svobodny",
+blagoveshchensk: "Blagoveshchensk",
+confirmDelete: "Delete this listing?",
+
   },
 
   az: {
@@ -533,5 +542,9 @@ edit: "Redaktə",
 empty: "Boşdur",
 occupied: "Doludur",
 salary: "Maaşa qədər",
+city: "Şəhər",
+svobodny: "Svobodnı",
+blagoveshchensk: "Blaqoveşensk",
+confirmDelete: "Bu elan silinsin?",
   },
 };

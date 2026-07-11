@@ -1,3 +1,4 @@
+import { useLang } from "@/context/LangContext";
 import React, {
   useCallback,
   useEffect,
@@ -42,6 +43,8 @@ export default function ListingsTab({
   colors,
   insets,
 }: Props) {
+
+  const { tr } = useLang();
 
   const [loading, setLoading] =
     useState(true);
@@ -89,11 +92,11 @@ export default function ListingsTab({
   ) => {
 
     Alert.alert(
-      "Elanı sil",
-      `"${address}" silinsin?`,
+  tr("delete"),
+  tr("confirmDelete"),
       [
         {
-          text: "Ləğv et",
+          text: tr("cancel"),
           style: "cancel",
         },
 
@@ -132,10 +135,10 @@ export default function ListingsTab({
   };
 
   const STATUS_LABELS = {
-    available: tr("occupied"),
-    busy: tr("salary"),
-    salary_credit: tr("salary"),
-  };
+  available: tr("empty"),
+  busy: tr("occupied"),
+  salary_credit: tr("salary"),
+};
 
   return (
         <FlatList
@@ -167,7 +170,7 @@ export default function ListingsTab({
               marginTop: 50,
             }}
           >
-            Elan yoxdur
+            {tr("noListings")}
           </Text>
         )
       }
@@ -220,7 +223,7 @@ export default function ListingsTab({
                   color: colors.mutedForeground,
                 }}
               >
-                🏠 {item.rooms} otaq
+                🏠 {item.rooms} {tr("room")}
               </Text>
 
               <Text
@@ -288,7 +291,7 @@ export default function ListingsTab({
                     fontWeight: "700",
                   }}
                 >
-                  Sil
+                  {tr("delete")}
                 </Text>
               </TouchableOpacity>
 

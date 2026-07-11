@@ -1,4 +1,5 @@
 import { Feather } from "@expo/vector-icons";
+import { Picker } from "@react-native-picker/picker";
 import * as Haptics from "expo-haptics";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
@@ -44,6 +45,7 @@ export default function AddPropertyScreen() {
   const [rooms, setRooms] = useState<number>(1);
   const [address, setAddress] = useState("");
   const [district, setDistrict] = useState("");
+  const [city, setCity] = useState("Svobodny");
   const [priceType, setPriceType] = useState<"fixed" | "weekday_weekend" | "negotiable">("fixed");
   const [priceWeekday, setPriceWeekday] = useState("");
   const [priceWeekend, setPriceWeekend] = useState("");
@@ -117,6 +119,7 @@ showAlert(tr("profileNotReady"), tr("error"));      return;
         rooms,
         address,
         district,
+        city,
         price_type: priceType,
         price_weekday: priceType !== "negotiable" ? Number(priceWeekday) : null,
         price_weekend: priceType === "weekday_weekend" ? Number(priceWeekend) : null,
@@ -201,7 +204,28 @@ showAlert(tr("profileNotReady"), tr("error"));      return;
       case 1:
         return (
           <StepContainer title={tr("addressInfo")} colors={colors}>
-            <FormInput label={tr("district")} value={district} onChangeText={setDistrict} placeholder={tr("districtPlaceholder")} colors={colors} />
+            <View style={{ gap: 6 }}>
+  <Text style={[styles.inputLabel, { color: colors.mutedForeground }]}>
+    {tr("city")}
+  </Text>
+
+  <View
+    style={{
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 10,
+      backgroundColor: colors.muted,
+    }}
+  >
+    <Picker
+      selectedValue={city}
+      onValueChange={(value) => setCity(value)}
+    >
+      <Picker.Item label={tr("svobodny")} value="Svobodny" />
+<Picker.Item label={tr("blagoveshchensk")} value="Blagoveshchensk" />
+    </Picker>
+  </View>
+</View>
             <FormInput label={tr("address")} value={address} onChangeText={setAddress} placeholder={tr("addressPlaceholder")} colors={colors} />
           </StepContainer>
         );
