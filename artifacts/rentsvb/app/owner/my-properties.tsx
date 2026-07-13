@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@/context/AuthContext";
+import { useLang } from "@/context/LangContext";
 import { useColors } from "@/hooks/useColors";
 import { supabase, type Property } from "@/lib/supabase";
 
@@ -31,6 +32,7 @@ export default function MyPropertiesScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { profile } = useAuth();
+  const { tr } = useLang();
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -112,7 +114,11 @@ setProperties((prev) =>
     s === "available" ? "#22c55e" : s === "salary_credit" ? "#f59e0b" : "#ef4444";
 
   const statusLabel = (s: Status) =>
-    s === "available" ? "Boşdur" : s === "salary_credit" ? "Maaşa qədər" : "Doludur";
+  s === "available"
+    ? tr("empty")
+    : s === "salary_credit"
+    ? tr("salary")
+    : tr("occupied");
 
   if (loading) {
     return (
@@ -129,7 +135,7 @@ setProperties((prev) =>
           <Feather name="arrow-left" size={22} color={colors.foreground} />
         </TouchableOpacity>
         <Text style={[styles.title, { color: colors.foreground }]}>
-          Mənim Mənzillərim
+          {tr("myListings")}
         </Text>
         <TouchableOpacity onPress={() => router.push("/owner/add-property")}>
           <Feather name="plus" size={22} color={colors.primary} />
@@ -169,7 +175,7 @@ setProperties((prev) =>
 
             {/* One-click status change */}
             <View style={styles.statusRow}>
-              <Text style={[styles.statusRowLabel, { color: colors.mutedForeground }]}>Status:</Text>
+              <Text style={[styles.statusRowLabel, { color: colors.mutedForeground }]}>{tr("status")}:</Text>
               <View style={styles.statusBtns}>
                 {STATUS_OPTIONS.map((opt) => (
                   <TouchableOpacity
@@ -186,7 +192,11 @@ setProperties((prev) =>
                     disabled={updatingId === item.id}
                   >
                     <Text style={[styles.statusBtnText, { color: item.status === opt.value ? "#fff" : colors.mutedForeground }]}>
-                      {opt.label}
+                      {opt.value === "available"
+  ? tr("empty")
+  : opt.value === "busy"
+  ? tr("occupied")
+  : tr("salary")}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -200,14 +210,14 @@ setProperties((prev) =>
                 onPress={() => router.push(`/property/${item.id}`)}
               >
                 <Feather name="eye" size={14} color={colors.mutedForeground} />
-                <Text style={[styles.actionText, { color: colors.mutedForeground }]}>Bax</Text>
+                <Text style={[styles.actionText, { color: colors.mutedForeground }]}>{tr("view")}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.actionBtn, { borderColor: colors.primary, backgroundColor: colors.primary + "10" }]}
                 onPress={() => router.push(`/owner/edit-property/${item.id}`)}
               >
                 <Feather name="edit-2" size={14} color={colors.primary} />
-                <Text style={[styles.actionText, { color: colors.primary }]}>Redaktə</Text>
+                <Text style={[styles.actionText, { color: colors.primary }]}>{tr("edit")}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.actionBtn, { borderColor: colors.destructive }]}
@@ -217,7 +227,7 @@ setProperties((prev) =>
 }}
               >
                 <Feather name="trash-2" size={14} color={colors.destructive} />
-                <Text style={[styles.actionText, { color: colors.destructive }]}>Sil</Text>
+                <Text style={[styles.actionText, { color: colors.destructive }]}>{tr("delete")}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -227,7 +237,7 @@ setProperties((prev) =>
             <View style={[styles.emptyIcon, { backgroundColor: colors.muted }]}>
               <Feather name="home" size={40} color={colors.mutedForeground} />
             </View>
-            <Text style={[styles.emptyTitle, { color: colors.foreground }]}>Hələ elan yoxdur</Text>
+            <Text style={[styles.emptyTitle, { color: colors.foreground }]}>{tr("noListings")}</Text>
             <TouchableOpacity
               style={[styles.addBtn, { backgroundColor: colors.primary }]}
               onPress={() => router.push("/owner/add-property")}
