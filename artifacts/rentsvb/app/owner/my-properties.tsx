@@ -1,4 +1,3 @@
-import { useLang } from "@/context/LangContext";
 import { Feather } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
@@ -21,10 +20,14 @@ import { supabase, type Property } from "@/lib/supabase";
 
 type Status = "available" | "busy" | "salary_credit";
 
+const STATUS_OPTIONS: { value: Status; label: string; color: string }[] = [
+  { value: "available", label: "Boş", color: "#22c55e" },
+  { value: "busy", label: "Dolu", color: "#ef4444" },
+  { value: "salary_credit", label: "Maaşa", color: "#f59e0b" },
+];
 
 export default function MyPropertiesScreen() {
   const colors = useColors();
-  const { tr } = useLang();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { profile } = useAuth();
@@ -35,7 +38,11 @@ export default function MyPropertiesScreen() {
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
   const fetchMyProperties = useCallback(async () => {
-    if (!profile) return;
+    if (!profile) {
+  setLoading(false);
+  setRefreshing(false);
+  return;
+}
     try {
       const { data, error } = await supabase
         .from("properties")
@@ -57,34 +64,45 @@ export default function MyPropertiesScreen() {
   const updateStatus = async (id: string, status: Status) => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setUpdatingId(id);
-    await supabase.from("properties").update({ status }).eq("id", id);
-    setProperties((prev) => prev.map((p) => (p.id === id ? { ...p, status } : p)));
+    const { error } = await supabase
+  .from("properties")
+  .update({ status })
+  .eq("id", id);
+
+if (error) {
+  Alert.alert("Error", error.message);
+  setUpdatingId(null);
+  return;
+}
+
+setProperties((prev) =>
+  prev.map((p) =>
+    p.id === id ? { ...p, status } : p
+  )
+);
     setUpdatingId(null);
   };
 
   const deleteProperty = async (id: string) => {
-    Alert.alert(
-  tr("delete"),
-  tr("deleteConfirm"),
-  [
-    { text: tr("cancel"), style: "cancel" },
-    {
-  text: tr("delete"),
-  style: "destructive",
-  onPress: async () => {
-    await Haptics.notificationAsync(
-      Haptics.NotificationFeedbackType.Warning
-    );
-    await supabase.from("properties").delete().eq("id", id);
-    setProperties((prev) => prev.filter((p) => p.id !== id));
-  },
-},
-  ]
-);
+  const { error } = await supabase
+    .from("properties")
+    .delete()
+    .eq("id", id);
+
+  console.log("OWNER DELETE", error);
+
+  if (error) {
+    Alert.alert("Error", error.message);
+    return;
+  }
+
+  setProperties((prev) =>
+    prev.filter((p) => p.id !== id)
+  );
 };
 
   const priceLabel = (p: Property) => {
-    if (p.price_type === "negotiable") return tr("negotiable");
+    if (p.price_type === "negotiable") return "Razılaşma ilə";
     if (p.price_type === "weekday_weekend" && p.price_weekend)
       return `${p.price_weekday?.toLocaleString()} / ${p.price_weekend.toLocaleString()} ₽`;
     return `${p.price_weekday?.toLocaleString()} ₽`;
@@ -94,17 +112,7 @@ export default function MyPropertiesScreen() {
     s === "available" ? "#22c55e" : s === "salary_credit" ? "#f59e0b" : "#ef4444";
 
   const statusLabel = (s: Status) =>
-  s === "available"
-    ? tr("empty")
-    : s === "salary_credit"
-    ? tr("salary")
-    : tr("occupied");
-
-    const STATUS_OPTIONS = [
-  { value: "available", label: tr("empty") },
-  { value: "occupied", label: tr("occupied") },
-  { value: "salary_credit", label: tr("salaryCredit") },
-] as const;
+    s === "available" ? "Boşdur" : s === "salary_credit" ? "Maaşa qədər" : "Doludur";
 
   if (loading) {
     return (
@@ -121,7 +129,7 @@ export default function MyPropertiesScreen() {
           <Feather name="arrow-left" size={22} color={colors.foreground} />
         </TouchableOpacity>
         <Text style={[styles.title, { color: colors.foreground }]}>
-          {tr("myListings")}
+          Mənim Mənzillərim
         </Text>
         <TouchableOpacity onPress={() => router.push("/owner/add-property")}>
           <Feather name="plus" size={22} color={colors.primary} />
@@ -148,7 +156,7 @@ export default function MyPropertiesScreen() {
             <View style={styles.cardTop}>
               <View style={{ flex: 1 }}>
                 <Text style={[styles.cardTitle, { color: colors.foreground }]}>
-                  {item.rooms} {tr("room")} · {item.district || item.address}
+                  {item.rooms} otaqlı · {item.district || item.address}
                 </Text>
                 <Text style={[styles.cardPrice, { color: colors.primary }]}>
                   {priceLabel(item)}
@@ -192,25 +200,24 @@ export default function MyPropertiesScreen() {
                 onPress={() => router.push(`/property/${item.id}`)}
               >
                 <Feather name="eye" size={14} color={colors.mutedForeground} />
-                <Text style={[styles.actionText, { color: colors.mutedForeground }]}>
-  {tr("view")}
-</Text>
+                <Text style={[styles.actionText, { color: colors.mutedForeground }]}>Bax</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.actionBtn, { borderColor: colors.primary, backgroundColor: colors.primary + "10" }]}
                 onPress={() => router.push(`/owner/edit-property/${item.id}`)}
               >
                 <Feather name="edit-2" size={14} color={colors.primary} />
-                <Text style={[styles.actionText, { color: colors.primary }]}> {tr("edit")}</Text>
+                <Text style={[styles.actionText, { color: colors.primary }]}>Redaktə</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.actionBtn, { borderColor: colors.destructive }]}
-                onPress={() => deleteProperty(item.id)}
+                onPress={() => {
+  console.log("BUTTON PRESSED", item.id);
+  deleteProperty(item.id);
+}}
               >
                 <Feather name="trash-2" size={14} color={colors.destructive} />
-                <Text style={[styles.actionText, { color: colors.destructive }]}>
-  {tr("delete")}
-</Text>
+                <Text style={[styles.actionText, { color: colors.destructive }]}>Sil</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -220,13 +227,13 @@ export default function MyPropertiesScreen() {
             <View style={[styles.emptyIcon, { backgroundColor: colors.muted }]}>
               <Feather name="home" size={40} color={colors.mutedForeground} />
             </View>
-            <Text style={[styles.emptyTitle, { color: colors.foreground }]}>{tr("noListings")}</Text>
+            <Text style={[styles.emptyTitle, { color: colors.foreground }]}>Hələ elan yoxdur</Text>
             <TouchableOpacity
               style={[styles.addBtn, { backgroundColor: colors.primary }]}
               onPress={() => router.push("/owner/add-property")}
             >
               <Feather name="plus" size={16} color="#fff" />
-              <Text style={styles.addBtnText}>{tr("addProperty")}</Text>
+              <Text style={styles.addBtnText}>Yeni Mənzil Əlavə et</Text>
             </TouchableOpacity>
           </View>
         }

@@ -56,7 +56,7 @@ export default function ListingsTab({
 
     setLoading(true);
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("properties")
       .select(`
         id,
@@ -74,9 +74,12 @@ export default function ListingsTab({
         ascending: false,
       });
 
-    setListings(
-      (data as Property[]) || []
-    );
+    if (error) {
+  console.error(error);
+  setListings([]);
+} else {
+  setListings((data as Property[]) || []);
+}
 
     setLoading(false);
 
@@ -86,48 +89,30 @@ export default function ListingsTab({
     fetch();
   }, [fetch]);
 
-  const deleteListing = (
-    id: string,
-    address: string
-  ) => {
+  const deleteListing = async (id: string) => {
+  console.log("DELETE START");
 
-    Alert.alert(
-  tr("delete"),
-  tr("confirmDelete"),
-      [
-        {
-          text: tr("cancel"),
-          style: "cancel",
-        },
+  const { error } = await supabase
+    .from("properties")
+    .delete()
+    .eq("id", id);
 
-        {
-          text: tr("delete"),
-          style: "destructive",
+  console.log("DELETE RESULT", error);
 
-          onPress: async () => {
+  if (error) {
+    console.error(error);
+    Alert.alert("Error", error.message);
+    return;
+  }
 
-            await supabase
-              .from("properties")
-              .delete()
-              .eq("id", id);
+  setListings((prev) =>
+    prev.filter((x) => x.id !== id)
+  );
 
-            setListings(prev =>
-              prev.filter(
-                x => x.id !== id
-              )
-            );
-
-            await Haptics.impactAsync(
-              Haptics.ImpactFeedbackStyle.Heavy
-            );
-
-          },
-        },
-      ]
-    );
-
-  };
-
+  await Haptics.impactAsync(
+    Haptics.ImpactFeedbackStyle.Heavy
+  );
+};
   const STATUS_COLORS = {
     available: "#22c55e",
     busy: "#ef4444",
@@ -262,12 +247,7 @@ export default function ListingsTab({
                 </Text>
               </View>
                             <TouchableOpacity
-                onPress={() =>
-                  deleteListing(
-                    item.id,
-                    item.address
-                  )
-                }
+                onPress={() => deleteListing(item.id)}
                 style={{
                   marginTop: 16,
                   backgroundColor: "#ef4444",

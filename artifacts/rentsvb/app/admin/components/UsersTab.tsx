@@ -65,9 +65,14 @@ export default function UsersTab({
       q = q.eq("role", roleFilter);
     }
 
-    const { data } = await q;
+    const { data, error } = await q;
 
-    setUsers(data || []);
+if (error) {
+  console.error(error);
+  setUsers([]);
+} else {
+  setUsers(data || []);
+}
 
     setLoading(false);
   }, [roleFilter]);
@@ -76,83 +81,71 @@ export default function UsersTab({
     fetch();
   }, [fetch]);
 
-  const toggleBlock = async (
-    user: UserProfile
-  ) => {
-    const newBlocked =
-      !user.is_blocked;
+  const toggleBlock = async (user: UserProfile) => {
+  const newBlocked = !user.is_blocked;
 
-    Alert.alert(
-      newBlocked
-        ? "Blokla"
-        : "Bloku götür",
-      `${user.full_name} ${
-        newBlocked
-          ? "bloklanacaq"
-          : "bloku götürüləcək"
-      }`,
-      [
-        {
-          text: "Ləğv et",
-          style: "cancel",
-        },
-        {
-          text: "Bəli",
-          onPress: async () => {
-            await supabase
-              .from("profiles")
-              .update({
-                is_blocked:
-                  newBlocked,
-              })
-              .eq("id", user.id);
+  const { error } = await supabase
+    .from("profiles")
+    .update({
+      is_blocked: newBlocked,
+    })
+    .eq("id", user.id);
 
-            setUsers((prev) =>
-              prev.map((u) =>
-                u.id === user.id
-                  ? {
-                      ...u,
-                      is_blocked:
-                        newBlocked,
-                    }
-                  : u
-              )
-            );
+  console.log("BLOCK", error);
 
-            await Haptics.impactAsync(
-              Haptics.ImpactFeedbackStyle
-                .Medium
-            );
-          },
-        },
-      ]
-    );
-  };
+  if (error) {
+    Alert.alert("Error", error.message);
+    return;
+  }
 
-  const changeRole = async (
-    user: UserProfile,
-    newRole: "user" | "owner"
-  ) => {
-    await supabase
-      .from("profiles")
-      .update({
-        role: newRole,
-        is_approved:
-          newRole === "owner",
-      })
-      .eq("id", user.id);
+  setUsers((prev) =>
+    prev.map((u) =>
+      u.id === user.id
+        ? {
+            ...u,
+            is_blocked: newBlocked,
+          }
+        : u
+    )
+  );
 
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.id === user.id
-          ? {
-              ...u,
-              role: newRole,
-            }
-          : u
-      )
-    );
-  };
+  await Haptics.impactAsync(
+    Haptics.ImpactFeedbackStyle.Medium
+  );
+};
+const changeRole = async (
+  user: UserProfile,
+  newRole: "user" | "owner"
+) => {
+  const { error } = await supabase
+    .from("profiles")
+    .update({
+      role: newRole,
+      is_approved: newRole === "owner",
+    })
+    .eq("id", user.id);
+
+  if (error) {
+    Alert.alert("Error", error.message);
+    return;
+  }
+
+  setUsers((prev) =>
+    prev.map((u) =>
+      u.id === user.id
+        ? {
+            ...u,
+            role: newRole,
+            is_approved: newRole === "owner",
+          }
+        : u
+    )
+  );
+
+  await Haptics.impactAsync(
+    Haptics.ImpactFeedbackStyle.Medium
+  );
+};
     return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -221,7 +214,7 @@ export default function UsersTab({
           keyExtractor={(i) => i.id}
           refreshControl={
             <RefreshControl
-              refreshing={false}
+              refreshing={loading}
               onRefresh={fetch}
               tintColor={colors.primary}
             />

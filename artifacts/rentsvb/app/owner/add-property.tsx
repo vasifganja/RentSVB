@@ -115,21 +115,20 @@ showAlert(tr("profileNotReady"), tr("error"));      return;
     try {
       const uploadedUrls = images.length > 0 ? await uploadImages() : [];
       const { error } = await supabase.from("properties").insert({
-        owner_id: profile!.id,
-        rooms,
-        address,
-        district,
-        city,
-        price_type: priceType,
-        price_weekday: priceType !== "negotiable" ? Number(priceWeekday) : null,
-        price_weekend: priceType === "weekday_weekend" ? Number(priceWeekend) : null,
-        max_people: maxPeople,
-        salary_credit: salaryCredit,
-        advance_credit: advanceCredit,
-        description,
-        status: "available",
-        images: uploadedUrls,
-      });
+  owner_id: profile!.id,
+  rooms,
+  address,
+  district,
+  price_type: priceType,
+  price_weekday: priceType !== "negotiable" ? Number(priceWeekday) : null,
+  price_weekend: priceType === "weekday_weekend" ? Number(priceWeekend) : null,
+  max_people: maxPeople,
+  salary_credit: salaryCredit,
+  advance_credit: advanceCredit,
+  description,
+  status: "available",
+  images: uploadedUrls,
+});
       if (error) throw error;
       // Admina Telegram bildirişi göndər
       notifyNewListing({

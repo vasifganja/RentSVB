@@ -25,7 +25,6 @@ export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { profile, signOut, setGuestProfile } = useAuth();
-  console.log("PROFILE:", profile);
   const { lang, setLang, tr } = useLang();
   const [showOwnerForm, setShowOwnerForm] = useState(false);
   const [showLangPicker, setShowLangPicker] = useState(false);
@@ -316,8 +315,26 @@ loadOwnerStats();
                   <Text style={[styles.formDesc, { color: colors.mutedForeground }]}>
                     {tr("becomeOwnerDesc")}
                   </Text>
-                  Kirayə qeydi əlavə etField label={tr("fullName")} value={name} onChangeText={setName} placeholder="Rəşad Əliyev" colors={colors} />
-                  Kirayə qeydi əlavə etField label={tr("phone")} value={phone} onChangeText={setPhone} placeholder="+7 999 123 45 67" keyboardType="phone-pad" colors={colors} />
+                  <Text>{tr("fullName")}</Text>
+
+<TextInput
+  value={name}
+  onChangeText={setName}
+  placeholder="Rəşad Əliyev"
+  style={styles.input}
+  placeholderTextColor={colors.mutedForeground}
+/>
+
+<Text>{tr("phone")}</Text>
+
+<TextInput
+  value={phone}
+  onChangeText={setPhone}
+  placeholder="+7 999 123 45 67"
+  keyboardType="phone-pad"
+  style={styles.input}
+  placeholderTextColor={colors.mutedForeground}
+/>
                   <InputField label={tr("telegramUsername")} value={telegram} onChangeText={setTelegram} placeholder="@username" colors={colors} />
                   <TouchableOpacity
                     style={[styles.submitBtn, { backgroundColor: colors.primary }, submitting && { opacity: 0.7 }]}
