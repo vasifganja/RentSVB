@@ -36,6 +36,10 @@ export default function CompleteRental() {
   .select("owner_id, price_weekday")
   .eq("id", propertyId)
   .single();
+  if (!property) {
+  Alert.alert(tr("error"), "Property not found");
+  return;
+}
 
 const { error } = await supabase
   .from("rentals")

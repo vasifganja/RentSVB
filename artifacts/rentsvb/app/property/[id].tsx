@@ -21,6 +21,7 @@ import { useLang } from "@/context/LangContext";
 import { useColors } from "@/hooks/useColors";
 import { supabase, type Property } from "@/lib/supabase";
 import { openPhone, openTelegramLink, showAlert } from "@/lib/telegram";
+import { createRentalRequest } from "@/lib/rentalFlow";
 
 const { width } = Dimensions.get("window");
 
@@ -35,6 +36,7 @@ export default function PropertyDetail() {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
+  const [sendingRequest, setSendingRequest] = useState(false);
 
   useEffect(() => {
     fetchProperty();
@@ -88,6 +90,41 @@ export default function PropertyDetail() {
     openTelegramLink(`https://t.me/${username}`);
   };
 
+  const handleRentalRequest = async () => {
+  if (sendingRequest) return;
+
+setSendingRequest(true);
+    
+  if (!property || !profile) return;
+
+  try {
+    await createRentalRequest(
+      property.id,
+      property.owner_id,
+      profile.id
+    );
+
+    showAlert(tr("rentalRequestSent"));
+  } catch (error: any) {
+  console.error(error);
+
+  if (error.message === "PENDING_REQUEST_EXISTS") {
+  showAlert(tr("pendingRentalRequest"));
+  return;
+}
+
+if (error.message === "PROPERTY_NOT_AVAILABLE") {
+  showAlert(tr("propertyNotAvailable"));
+  return;
+}
+
+showAlert(tr("unknownError"));
+}
+  
+  finally {
+  setSendingRequest(false);
+}
+};
   const isMyProperty =
     property?.owner_id === profile?.id || profile?.role === "admin";
 
@@ -251,6 +288,30 @@ export default function PropertyDetail() {
             </View>
           ) : null}
 
+          {/* Rental Request */}
+{!isMyProperty && (
+  <TouchableOpacity
+    style={[
+      styles.requestBtn,
+      {
+        backgroundColor: colors.available,
+      },
+    ]}
+    onPress={handleRentalRequest}
+    disabled={sendingRequest}
+  >
+    <Feather
+      name="home"
+      size={18}
+      color="#fff"
+    />
+
+    <Text style={styles.callText}>
+  {sendingRequest ? tr("sending") : tr("rentalRequest")}
+</Text>
+  </TouchableOpacity>
+)}
+
           {/* Owner status control */}
           {isMyProperty && (
             <View style={styles.ownerSection}>
@@ -296,19 +357,12 @@ export default function PropertyDetail() {
           ]}
         >
           <TouchableOpacity
-            style={[styles.callBtn, { backgroundColor: colors.primary }]}
-            onPress={callOwner}
-          >
-            <Feather name="phone" size={18} color="#fff" />
-            <Text style={styles.callText}>Zəng et</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tgBtn, { backgroundColor: "#229ED9" }]}
-            onPress={telegramOwner}
-          >
-            <Feather name="send" size={18} color="#fff" />
-            <Text style={styles.callText}>Telegram</Text>
-          </TouchableOpacity>
+  style={[styles.tgBtn, { backgroundColor: "#229ED9" }]}
+  onPress={telegramOwner}
+>
+  <Feather name="send" size={18} color="#fff" />
+  <Text style={styles.callText}>{tr("telegram")}</Text>
+</TouchableOpacity>
         </View>
       )}
     </View>
@@ -413,15 +467,14 @@ const styles = StyleSheet.create({
   desc: { fontSize: 14, lineHeight: 21 },
   ownerSection: { gap: 10 },
   contactBar: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: 12,
-    flexDirection: "row",
-    gap: 10,
-    borderTopWidth: 1,
-  },
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  padding: 12,
+  gap: 10,
+  borderTopWidth: 1,
+},
   callBtn: {
     flex: 1,
     flexDirection: "row",
@@ -441,4 +494,17 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   callText: { color: "#fff", fontWeight: "700", fontSize: 15 },
+  contactRow: {
+  flexDirection: "row",
+  gap: 10,
+},
+
+requestBtn: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 8,
+  paddingVertical: 15,
+  borderRadius: 12,
+},
 });

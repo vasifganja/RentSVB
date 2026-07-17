@@ -18,6 +18,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useLang } from "@/context/LangContext";
 import { useColors } from "@/hooks/useColors";
 import { supabase, type Property } from "@/lib/supabase";
+import { showAlert } from "@/lib/telegram";
 
 type Status = "available" | "busy" | "salary_credit";
 
@@ -212,6 +213,20 @@ setProperties((prev) =>
                 <Feather name="eye" size={14} color={colors.mutedForeground} />
                 <Text style={[styles.actionText, { color: colors.mutedForeground }]}>{tr("view")}</Text>
               </TouchableOpacity>
+              
+              <TouchableOpacity
+  style={[styles.actionBtn, { borderColor: colors.available }]}
+  // TODO: Open Rental Requests screen
+
+  onPress={() =>
+  router.push(`/owner/rental-requests?propertyId=${item.id}`)
+}
+>
+  <Feather name="inbox" size={14} color={colors.available} />
+  <Text style={[styles.actionText, { color: colors.available }]}>
+    {tr("rentalRequests")}
+  </Text>
+</TouchableOpacity>
               <TouchableOpacity
                 style={[styles.actionBtn, { borderColor: colors.primary, backgroundColor: colors.primary + "10" }]}
                 onPress={() => router.push(`/owner/edit-property/${item.id}`)}
@@ -301,9 +316,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   statusBtnText: { fontSize: 12, fontWeight: "700" },
-  actions: { flexDirection: "row", gap: 8 },
+  actions: {
+  flexDirection: "column",
+  gap: 8,
+},
   actionBtn: {
-    flex: 1,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
