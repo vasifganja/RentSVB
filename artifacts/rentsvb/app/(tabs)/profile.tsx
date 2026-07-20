@@ -40,6 +40,7 @@ export default function ProfileScreen() {
   debt: 0,
 });
 const [salaryDebts, setSalaryDebts] = useState<any[]>([]);
+const [unreadNotifications, setUnreadNotifications] = useState(0);
 
   const topPad = Platform.OS === "web" ? 67 : insets.top;
 
@@ -107,8 +108,26 @@ setSalaryDebts(
 
 loadOwnerStats();
 }, [profile]);
+useEffect(() => {
+  loadUnreadNotifications();
+}, [profile?.id]);
 
-  const handleOwnerRequest = async () => {
+  const loadUnreadNotifications = async () => {
+  if (!profile?.id) return;
+
+  const { data, error } = await supabase.rpc(
+    "get_unread_notification_count",
+    {
+      p_user_id: profile.id,
+    }
+  );
+
+  if (!error) {
+    setUnreadNotifications(data ?? 0);
+  }
+};
+
+const handleOwnerRequest = async () => {
     if (!name.trim()) { showAlert(tr("nameRequired"), tr("error")); return; }
     if (!phone.trim()) { showAlert(tr("phoneRequired"), tr("error")); return; }
     setSubmitting(true);
@@ -394,6 +413,16 @@ loadOwnerStats();
                 ))}
               </View>
             )}
+            <MenuRow
+  icon="bell"
+  label={
+  unreadNotifications > 0
+    ? `${tr("notifications")} (${unreadNotifications})`
+    : tr("notifications")
+}
+  colors={colors}
+  onPress={() => router.push("/notifications" as any)}
+/>
             <MenuRow icon="info" label={tr("about")} colors={colors} onPress={() => {}} last />
           </Section>
 

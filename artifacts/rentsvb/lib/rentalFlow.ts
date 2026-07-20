@@ -49,55 +49,35 @@ export async function ownerCompleteRental(
   rentalId: string,
   agreedPrice: number
 ) {
-  // Rental request-i tap
-  const { data: rental, error } = await supabase
+  const { data: request, error } = await supabase
     .from("rental_requests")
     .select("*")
     .eq("id", rentalId)
     .single();
 
-  if (error || !rental) {
+  if (error || !request) {
     throw new Error("Rental request not found.");
   }
 
-  // Yalnız accepted request tamamlana bilər
-  if (rental.status !== "accepted") {
-    throw new Error("Only accepted rentals can be completed.");
+  const { error: rpcError } = await supabase.rpc(
+    "complete_owner_rental",
+    {
+      p_request_id: rentalId,
+      p_agreed_price: agreedPrice,
+    }
+  );
+
+  if (rpcError) {
+    throw rpcError;
   }
 
+  await createNotification({
+    user_id: request.tenant_id,
+    rental_request_id: rentalId,
+    ...getOwnerCompletedNotification(),
+  });
 
-  // Razılaşdırılmış qiyməti yaz
-  const { data, error: updateError } = await supabase
-    .from("rental_requests")
-    .update({
-  agreed_price: agreedPrice,
-  status: "accepted",
-  owner_completed_at: now(),
-  completed_at: now(),
-})
-    .eq("id", rentalId)
-    .select()
-    .single();
-
-  if (updateError) {
-    throw updateError;
-  }await writeActivityLog({
-  user_id: rental.owner_id,
-  rental_request_id: rentalId,
-
-  action: "owner_completed",
-
-  details: {
-    agreed_price: agreedPrice,
-  },
-});
-await createNotification({
-  user_id: rental.tenant_id,
-  rental_request_id: rentalId,
-
-  ...getOwnerCompletedNotification(),
-});
-  return data;
+  return true;
 }
 
 export async function ownerRejectRental(
@@ -221,7 +201,6 @@ await createNotification({
 export async function completeRental(
   rentalRequestId: string
 ) {
-  // Rental request-i tap
   const { data: request, error } = await supabase
     .from("rental_requests")
     .select("*")
@@ -232,63 +211,35 @@ export async function completeRental(
     throw new Error("Rental request not found.");
   }
 
-  // Yalnız tenant tərəfindən təsdiqlənmiş icarə tamamlana bilər
-  if (!request.tenant_confirmed_at) {
-    throw new Error("Rental has not been confirmed by the tenant.");
+  const { error: rpcError } = await supabase.rpc(
+    "complete_rental",
+    {
+      p_request_id: rentalRequestId,
+    }
+  );
+
+  if (rpcError) {
+    throw rpcError;
   }
-  const { error: requestError } = await supabase
-  .from("rental_requests")
-  .update({
-    status: "completed",
-  })
-  .eq("id", rentalRequestId);
 
-if (requestError) {
-  throw requestError;
-}
-  // Rental statusunu completed et
-const { error: rentalError } = await supabase
-  .from("rentals")
-  .update({
-    status: "completed",
-  })
-  .eq("rental_request_id", rentalRequestId);
+  // Hələlik notification frontend-də qalır
+  await createNotification({
+    user_id: request.tenant_id,
+    rental_request_id: rentalRequestId,
+    ...getRentalCompletedNotification(),
+  });
 
-if (rentalError) {
-  throw rentalError;
-}
-await makePropertyAvailable(
-  request.property_id
-);
-await writeActivityLog({
-  user_id: request.owner_id,
-  rental_request_id: rentalRequestId,
+  await createNotification({
+    user_id: request.owner_id,
+    rental_request_id: rentalRequestId,
+    ...getOwnerRentalCompletedNotification(),
+  });
 
-  action: "rental_completed",
-
-  details: {},
-});
-await createNotification({
-  user_id: request.tenant_id,
-  rental_request_id: rentalRequestId,
-
-  ...getRentalCompletedNotification(),
-});
-
-await createNotification({
-  user_id: request.owner_id,
-  rental_request_id: rentalRequestId,
-
-  ...getOwnerRentalCompletedNotification(),
-});
-
-return true;
-
+  return true;
 }
 export async function cancelActiveRental(
   rentalRequestId: string
 ) {
-  // Rental request-i tap
   const { data: request, error } = await supabase
     .from("rental_requests")
     .select("*")
@@ -299,61 +250,30 @@ export async function cancelActiveRental(
     throw new Error("Rental request not found.");
   }
 
-  // Yalnız tenant tərəfindən təsdiqlənmiş aktiv icarə ləğv edilə bilər
-  if (!request.tenant_confirmed_at) {
-    throw new Error("Rental is not active.");
+  const { error: rpcError } = await supabase.rpc(
+    "cancel_rental",
+    {
+      p_request_id: rentalRequestId,
+    }
+  );
+
+  if (rpcError) {
+    throw rpcError;
   }
-  // Rental request statusunu cancelled et
-const { error: requestError } = await supabase
-  .from("rental_requests")
-  .update({
-    status: "cancelled",
-  })
-  .eq("id", rentalRequestId);
 
-if (requestError) {
-  throw requestError;
-}
+  await createNotification({
+    user_id: request.tenant_id,
+    rental_request_id: rentalRequestId,
+    ...getRentalCancelledNotification(),
+  });
 
-// Rental statusunu cancelled et
-const { error: rentalError } = await supabase
-  .from("rentals")
-  .update({
-    status: "cancelled",
-  })
-  .eq("rental_request_id", rentalRequestId);
+  await createNotification({
+    user_id: request.owner_id,
+    rental_request_id: rentalRequestId,
+    ...getOwnerRentalCancelledNotification(),
+  });
 
-if (rentalError) {
-  throw rentalError;
-}
-await makePropertyAvailable(
-  request.property_id
-);
-
-await writeActivityLog({
-  user_id: request.owner_id,
-  rental_request_id: rentalRequestId,
-
-  action: "rental_cancelled",
-
-  details: {},
-});
-
-await createNotification({
-  user_id: request.tenant_id,
-  rental_request_id: rentalRequestId,
-
-  ...getRentalCancelledNotification(),
-});
-
-await createNotification({
-  user_id: request.owner_id,
-  rental_request_id: rentalRequestId,
-
-  ...getOwnerRentalCancelledNotification(),
-});
-
-return true;
+  return true;
 }
 
 
@@ -392,17 +312,14 @@ if (existingRequests && existingRequests.length > 0) {
   throw new Error("PENDING_REQUEST_EXISTS");
 }
 
-  const { data, error } = await supabase
-    .from("rental_requests")
-    .insert({
-      property_id: propertyId,
-      owner_id: ownerId,
-      tenant_id: tenantId,
-      status: "pending",
-      created_at: now(),
-    })
-    .select()
-    .single();
+  const { data, error } = await supabase.rpc(
+  "create_rental_request",
+  {
+    p_property_id: propertyId,
+    p_owner_id: ownerId,
+    p_tenant_id: tenantId,
+  }
+);
 
   if (error) {
     throw error;
@@ -414,6 +331,7 @@ if (existingRequests && existingRequests.length > 0) {
 export async function ownerAcceptRental(
   rentalRequestId: string
 ) {
+  // Request-i tap (notification üçün lazımdır)
   const { data: request, error } = await supabase
     .from("rental_requests")
     .select("*")
@@ -424,55 +342,24 @@ export async function ownerAcceptRental(
     throw new Error("Rental request not found.");
   }
 
-  if (request.status !== "pending") {
-    throw new Error("Only pending requests can be accepted.");
-  }
-
-  const { data, error: updateError } = await supabase
-    .from("rental_requests")
-    .update({
-      status: "accepted",
-      accepted_at: now(),
-    })
-    .eq("id", rentalRequestId)
-    .select()
-    .single();
-
-  if (updateError) {
-    throw updateError;
-  }
-
-  await reserveProperty(
-    request.property_id,
-    rentalRequestId
+  // Bütün əsas işi artıq SQL Function edir
+  const { error: rpcError } = await supabase.rpc(
+    "accept_rental",
+    {
+      p_request_id: rentalRequestId,
+    }
   );
 
-  const { error: rejectError } = await supabase
-    .from("rental_requests")
-    .update({
-      status: "declined",
-      rejected_at: now(),
-    })
-    .eq("property_id", request.property_id)
-    .eq("status", "pending")
-    .neq("id", rentalRequestId);
-
-  if (rejectError) {
-    throw rejectError;
+  if (rpcError) {
+    throw rpcError;
   }
 
+  // Hələlik notification frontend-də qalır
   await createNotification({
     user_id: request.tenant_id,
     rental_request_id: rentalRequestId,
     ...getRequestAcceptedNotification(),
   });
 
-  await writeActivityLog({
-    user_id: request.owner_id,
-    rental_request_id: rentalRequestId,
-    action: "request_accepted",
-    details: {},
-  });
-
-  return data;
+  return true;
 }

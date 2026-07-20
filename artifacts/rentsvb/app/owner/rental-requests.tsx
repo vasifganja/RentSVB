@@ -18,11 +18,13 @@ import {
   ownerRejectRental,
   ownerCompleteRental,
 } from "@/lib/rentalFlow";
+import { useAuth } from "@/context/AuthContext";
 
 export default function RentalRequestsScreen() {
   const { tr } = useLang();
   const colors = useColors();
   const router = useRouter();
+  const { profile } = useAuth();
 
   const { propertyId } = useLocalSearchParams<{
     propertyId: string;
@@ -39,7 +41,6 @@ const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null);
 
 const [agreedPrice, setAgreedPrice] = useState("");
   const fetchRequests = async () => {
-  if (!propertyId) return;
 
   let query = supabase
     .from("rental_requests")
@@ -53,7 +54,11 @@ const [agreedPrice, setAgreedPrice] = useState("");
     address
   )
 `)
-    .eq("property_id", propertyId);
+    if (propertyId) {
+  query = query.eq("property_id", propertyId);
+} else {
+  query = query.eq("owner_id", profile?.id);
+}
 
   if (statusFilter !== "all") {
     query = query.eq("status", statusFilter);
@@ -263,7 +268,7 @@ setRequests((prev) =>
     fontSize: 12,
   }}
 >
-  {new Date(item.created_at).toLocaleString()}
+  {new Date(item.created_at).toLocaleDateString()}
 </Text>
 
     <View
