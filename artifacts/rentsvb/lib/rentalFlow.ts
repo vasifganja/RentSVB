@@ -170,18 +170,16 @@ export async function tenantConfirmRental(
     throw new Error("Owner has not completed this rental yet.");
   }
 
-  // Rental request-i yenilə
-  const { error: requestError } = await supabase
-    .from("rental_requests")
-    .update({
-      status: "active",
-      tenant_confirmed_at: now(),
-    })
-    .eq("id", requestId)
-
-  if (requestError) {
-    throw requestError;
+  const { error: requestError } = await supabase.rpc(
+  "confirm_rental",
+  {
+    p_request_id: requestId,
   }
+);
+
+if (requestError) {
+  throw requestError;
+}
 
   // Rentals cədvəlini yenilə
   const { error: rentalError } = await supabase
@@ -194,30 +192,26 @@ export async function tenantConfirmRental(
   if (rentalError) {
     throw rentalError;
   }
-  await createCommissionEntry(
+  /*
+await createCommissionEntry(
   request.owner_id,
   requestId,
   request.agreed_price
 );
+
 await reserveProperty(
   request.property_id,
   requestId
 );
 
-  await writeActivityLog({
-  user_id: request.tenant_id,
-  rental_request_id: requestId,
-
-  action: "tenant_confirmed",
-
-  details: {},
+await writeActivityLog({
+  ...
 });
+
 await createNotification({
-  user_id: request.owner_id,
-  rental_request_id: requestId,
-
-  ...getTenantConfirmedNotification(),
+  ...
 });
+*/
 
   return true;
 }

@@ -37,22 +37,21 @@ export async function getOwnerBalance(
 export async function createWalletEntry(
   data: WalletEntryData
 ) {
-  const balance =
-    await getOwnerBalance(data.owner_id);
+  console.log("Wallet insert data:", data);
 
-  const balanceAfter =
-    balance + data.amount;
-
-  const { error } = await supabase
+  const { data: inserted, error } = await supabase
     .from("owner_wallet")
-    .insert({
-      ...data,
-      balance_after: balanceAfter,
-    });
+    .insert(data)
+    .select();
+
+  console.log("Wallet inserted:", inserted);
+  console.log("Wallet error:", error);
 
   if (error) {
-    throw error;
-  }
+  throw new Error(
+    JSON.stringify(error, null, 2)
+  );
+}
 }
 export async function createCommissionEntry(
   ownerId: string,

@@ -276,7 +276,6 @@ loadOwnerStats();
     ))}
   </View>
 )}
-)}
   </View>
 
 )}
@@ -360,6 +359,17 @@ loadOwnerStats();
               <Text style={[styles.successText, { color: "#15803d" }]}>{tr("requestSent")}</Text>
             </View>
           )}
+          {profile?.role === "user" && (
+  <Section title={tr("rentals")} colors={colors}>
+  <MenuRow
+    icon="file-text"
+    label={tr("myRentalRequests")}
+    colors={colors}
+    onPress={() => router.push("/tenant/requests" as any)}
+    last
+  />
+</Section>
+)}
 
           {/* App settings */}
           <Section title={tr("app")} colors={colors}>
